@@ -1,7 +1,9 @@
 import express from "express";
-import walletRouter from "./walletRouter.js";
+import createWalletRouter from "./createWalletRouter.js";
+import networkRouter from "./networkRouter.js";
 const router = express.Router();
 
-router.use("/wallet", walletRouter);
+router.use("/wallet", createWalletRouter);
+router.use("/network", networkRouter);
 
 export default router;

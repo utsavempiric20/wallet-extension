@@ -10,6 +10,17 @@ const usersSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  networkId: {
+    type: String,
+    require: true,
+  },
+  accounts: [
+    {
+      address: String,
+      publicKey: String,
+      privateKey: String,
+    },
+  ],
 });
 
 export default mongoose.model("users", usersSchema);

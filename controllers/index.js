@@ -1,3 +1,4 @@
-import walletController from "./walletController.js";
+import createWalletController from "./createWalletController.js";
+import networkController from "./networkController.js";
 
-export default { walletController };
+export default { createWalletController, networkController };
