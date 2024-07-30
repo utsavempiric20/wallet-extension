@@ -1,22 +1,13 @@
 import express from "express";
-import controllers from "../controllers/index.js";
+import networkController from "../controllers/networkController.js";
 const networkRouter = express.Router();
 
-networkRouter.post("/addNetwork", controllers.networkController.addNetwork);
+networkRouter.post("/addNetwork", networkController.addNetwork);
 
-networkRouter.get("/getNetwork", controllers.networkController.getNetwork);
+networkRouter.get("/getNetwork", networkController.getNetwork);
 
-networkRouter.get(
-  "/getAllNetwork",
-  controllers.networkController.getAllNetwork
-);
-networkRouter.post(
-  "/updateNetwork",
-  controllers.networkController.updateNetwork
-);
-networkRouter.post(
-  "/deleteNetwork",
-  controllers.networkController.deleteNetwork
-);
+networkRouter.get("/getAllNetwork", networkController.getAllNetwork);
+networkRouter.post("/updateNetwork", networkController.updateNetwork);
+networkRouter.post("/deleteNetwork", networkController.deleteNetwork);
 
 export default networkRouter;

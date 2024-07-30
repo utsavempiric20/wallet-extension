@@ -1,40 +1,44 @@
 import express from "express";
-import controllers from "../controllers/index.js";
+import createWalletController from "../controllers/createWalletController.js";
 const createWalletRouter = express.Router();
 
 createWalletRouter.post(
   "/createPassword",
-  controllers.createWalletController.createPasswordForWallet
-);
-
-createWalletRouter.post(
-  "/createSeedPhrase/:id",
-  controllers.createWalletController.createSeedPhrase
+  createWalletController.createPasswordForWallet
 );
 
 createWalletRouter.post(
   "/checkSeedPhrase/:id",
-  controllers.createWalletController.checkSeedPhrase
-);
-
-createWalletRouter.post(
-  "/assignChainAndAccount",
-  controllers.createWalletController.assignChainAndAccount
+  createWalletController.checkSeedPhrase
 );
 
 createWalletRouter.get(
   "/getAccountDetails",
-  controllers.createWalletController.getAccountDetails
+  createWalletController.getAccountDetails
 );
 
 createWalletRouter.get(
   "/getAllAccounts/:id",
-  controllers.createWalletController.getAllAccounts
+  createWalletController.getAllAccounts
 );
 
 createWalletRouter.post(
   "/addUserAccount/:id",
-  controllers.createWalletController.addUserAccount
+  createWalletController.addUserAccount
 );
+
+createWalletRouter.post(
+  "/revealSecretData",
+  createWalletController.revealSecretData
+);
+
+createWalletRouter.post(
+  "/forgotPassword",
+  createWalletController.forgotPassword
+);
+
+createWalletRouter.post("/importWallet", createWalletController.importWallet);
+
+createWalletRouter.post("/importAccount", createWalletController.importAccount);
 
 export default createWalletRouter;

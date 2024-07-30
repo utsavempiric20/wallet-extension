@@ -5,7 +5,7 @@ import router from "./routers/index.js";
 import connectDatabase from "./config/database.js";
 
 const app = express();
-const PORT = process.env.PORT || 2255;
+const PORT = process.env.PORT || 8080;
 connectDatabase();
 
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -10,15 +10,13 @@ const usersSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  networkId: {
-    type: String,
-    require: true,
-  },
   accounts: [
     {
+      accountName: String,
       address: String,
       publicKey: String,
       privateKey: String,
+      balance: Number,
     },
   ],
 });
