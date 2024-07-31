@@ -1,0 +1,55 @@
+.createAccountMainBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.createAccountMainBox h2 {
+  font-weight: bold;
+}
+
+.createAccountMainBox p {
+  font-size: 20px;
+  width: 25%;
+}
+
+.createAccountMain_btn_box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  gap: 1rem;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.createAccountMain_btn_box .createAccountBtn {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--button-color);
+  border-radius: 2rem;
+  border: none;
+  width: 200px;
+  height: 50px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.createAccountMain_btn_box .orTxt {
+  font-size: 14px;
+  color: var(--small-txt-color);
+}
+
+.createAccountMain_btn_box .importAccountBtn {
+  border: none;
+  color: var(--button-color);
+  background-color: white;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+}
