@@ -1,0 +1,128 @@
+.recoverSeedPhrase {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recoverSeedPhrase_box {
+  text-align: left;
+  margin-top: 50px;
+  border: 1px solid rgb(240, 240, 241);
+  padding: 40px;
+  height: 400px;
+  width: 500px;
+  border-radius: 15px;
+}
+
+.recoverSeedPhrase p {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: var(--small-txt-color);
+  width: 95%;
+}
+
+.recoverSeedPhrase_box h2 {
+  font-weight: bold;
+  color: black;
+}
+
+.recoverSeedPhrase_box button {
+  margin-top: 30px;
+  border: none;
+  color: white;
+  background-color: var(--button-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+  text-decoration: none;
+}
+
+.manualImportAccountTextField label {
+  margin: 8px 0px;
+  font-weight: 500;
+  font-size: 16px;
+}
+.manualImportAccountTextField input {
+  height: 50px;
+  background-color: rgb(243 244 246 / 1);
+  border: 2px solid rgb(229, 229, 230);
+}
+
+.recoverSeedPhrase .nextBtntxt {
+  text-decoration: none;
+}
+
+.recoverSeedPhrase_box button:disabled {
+  opacity: 50%;
+}
+
+.recoverSeedPhrase_box_find_accountTxt {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  gap: 5px;
+}
+
+.cantAccountText {
+  text-align: center;
+  color: var(--small-txt-color);
+  font-size: 15px;
+}
+
+.importTxt {
+  text-align: center;
+  color: var(--button-color);
+  font-size: 15px;
+}
+
+.recoverSeedPhrase_box_seed label {
+  margin: 8px 0px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.recoverSeedPhrase_box_seed input {
+  border: none;
+  height: 50px;
+  background-color: rgb(250, 250, 250);
+}
+
+.bottomBtnComponent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0px 10px;
+}
+
+.bottomBtnComponent .findAccountCBtn {
+  border: none;
+  color: white;
+  background-color: var(--button-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+  text-decoration: none;
+}
+
+.bottomBtnComponent .cancelBtn {
+  border: none;
+  outline: none;
+  width: 100%;
+  background-color: none;
+  text-align: center;
+  color: var(--small-txt-color);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.dialogTitle {
+  font-weight: bold;
+}

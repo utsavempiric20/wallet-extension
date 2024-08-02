@@ -1,0 +1,101 @@
+.createAccountContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.createAccountContent_box {
+  text-align: left;
+  margin-top: 60px;
+  border: 1px solid rgb(240, 240, 241);
+  padding: 40px;
+  height: 650px;
+  width: 500px;
+  border-radius: 15px;
+}
+
+.createAccountContent p {
+  margin-top: 20px;
+  color: var(--small-txt-color);
+}
+
+.createAccountContent_box h2 {
+  font-weight: bold;
+}
+
+.createAccountContent_box button {
+  margin-top: 40px;
+  border: none;
+  color: white;
+  background-color: var(--button-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+}
+
+.getStartTxt {
+  text-decoration: none;
+}
+
+.accountTxt {
+  margin-top: 25px;
+  text-align: center;
+  color: var(--small-txt-color);
+  font-size: 13px;
+}
+
+.termsTxt {
+  text-align: center;
+  color: var(--small-txt-color);
+  font-size: 13px;
+}
+
+.alreadyAccountText {
+  text-align: center;
+  margin-top: 25px;
+  color: var(--small-txt-color);
+  font-size: 15px;
+}
+
+.importTxt_Box {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.importTxt {
+  text-align: center;
+  color: var(--small-txt-color);
+  font-size: 15.5px;
+}
+
+.importTxt_Box :hover {
+  text-decoration: none;
+}
+
+.learn_box {
+  margin-top: 2rem;
+}
+
+.learn_box Link {
+  text-decoration: none;
+}
+
+.learn_box .learnTxt {
+  color: var(--button-color);
+  text-decoration: none;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--button-color);
+  padding-bottom: 15px;
+  width: 61%;
+}
+
+.learn_box .learnTxt:hover {
+  border: none;
+}

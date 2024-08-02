@@ -51,5 +51,6 @@
   background-color: white;
   font-weight: 500;
   font-size: 15px;
+  outline: none;
   cursor: pointer;
 }

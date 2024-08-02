@@ -1,15 +1,14 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Navbar from "./components/NavBar/Navbar";
-import CreateAccountMain from "./components/CreateAccountMain/CreateAccountMain";
-import CreatePassword from "./components/CreatePassword/CreatePassword";
+import { BrowserRouter as Router } from "react-router-dom";
+import MyRoutes from "./components/MyRoutes";
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      {/* <CreateAccountMain /> */}
-      <CreatePassword />
+      <Router>
+        <MyRoutes />
+      </Router>
     </div>
   );
 }

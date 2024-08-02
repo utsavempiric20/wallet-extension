@@ -1,5 +1,6 @@
 import React from "react";
 import Style from "./CreateAccountMain.module.css";
+import { Link } from "react-router-dom";
 
 const CreateAccountMain = () => {
   return (
@@ -11,9 +12,15 @@ const CreateAccountMain = () => {
           with BLUESKY Wallet.
         </p>
         <div className={Style.createAccountMain_btn_box}>
-          <div className={Style.createAccountBtn}>Create Account</div>
+          <Link to="/create">
+            <div className={Style.createAccountBtn}>Create Account</div>
+          </Link>
           <div className={Style.orTxt}>or</div>
-          <div className={Style.importAccountBtn}>Import Existing Account</div>
+          <Link to="/recover-account" style={{ textDecoration: "none" }}>
+            <div className={Style.importAccountBtn}>
+              Import Existing Account
+            </div>
+          </Link>
         </div>
       </div>
     </div>

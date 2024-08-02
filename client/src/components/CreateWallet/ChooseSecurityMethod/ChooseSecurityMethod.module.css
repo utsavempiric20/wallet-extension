@@ -1,0 +1,83 @@
+.chooseSecurityMethod {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chooseSecurityMethod_box {
+  text-align: left;
+  margin-top: 60px;
+  border: 1px solid rgb(240, 240, 241);
+  padding: 40px;
+  height: 500px;
+  width: 500px;
+  border-radius: 15px;
+}
+
+.chooseSecurityMethod p {
+  margin-top: 20px;
+  color: var(--small-txt-color);
+}
+
+.chooseSecurityMethod_box h2 {
+  font-weight: bold;
+}
+
+.chooseSecurityMethod_box button {
+  margin-top: 40px;
+  border: none;
+  color: white;
+  background-color: var(--button-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+}
+
+.most_rec_box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 30px;
+}
+
+.most_rec_box .most_rex_txt {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.most_rec_box .infoIcon {
+  font-size: 24px;
+  color: var(--small-txt-color);
+}
+
+.secureBtnTxt {
+  text-decoration: none;
+}
+
+.secure_box {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  border-radius: 5px;
+  padding: 20px;
+  border-left: 4px solid var(--button-color);
+}
+
+.secure_box_secure_box {
+  display: flex;
+  flex-direction: column;
+}
+
+.secure_box .secure_box_secure_box .secure_box_securePassTxt {
+  font-weight: bold;
+}
+
+.secure_box_right_icon {
+  color: var(--button-color);
+  font-size: 50px;
+}

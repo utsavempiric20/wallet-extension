@@ -1,0 +1,130 @@
+.setupPassPhrase {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.setupPassPhrase_box {
+  text-align: left;
+  margin-top: 60px;
+  border: 1px solid rgb(240, 240, 241);
+  padding: 40px;
+  height: 800px;
+  width: 500px;
+  border-radius: 15px;
+}
+
+.setupPassPhrase p {
+  margin-top: 20px;
+  color: var(--small-txt-color);
+}
+
+.setupPassPhrase p b {
+  color: black;
+}
+
+.setupPassPhrase_box h2 {
+  font-weight: bold;
+}
+
+.setupPassPhrase_box button {
+  margin-top: 40px;
+  border: none;
+  color: white;
+  background-color: var(--button-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+}
+
+.setupPassPhrase_box .continueBtnTxt {
+  text-decoration: none;
+}
+
+.mainSeed_box {
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 45px 56px,
+    rgba(0, 0, 0, 0.043) 0px 10.0513px 12.5083px,
+    rgba(0, 0, 0, 0.027) 0px 2.99255px 3.72406px;
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.mainSeed_box .seed_twelve_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.seed_twelve_box .single_seed {
+  background-color: rgb(214, 237, 255);
+  padding: 8px 0px 8px 8px;
+  color: rgb(0, 84, 151);
+  font-weight: normal;
+  font-size: 15px;
+  width: 120px;
+}
+
+.mainSeed_box .mainSeed_box_border {
+  margin-top: 25px;
+  border-bottom: 1px solid var(--small-txt-color);
+  opacity: 30%;
+}
+
+.mainSeed_box .copyBtn {
+  margin-top: 20px;
+  background-color: rgb(240, 240, 241);
+  color: var(--button-color);
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.mainSeed_box .copyBtn:hover {
+  background-color: white;
+  border: 2px solid rgb(240, 240, 241);
+}
+
+.mainSeed_box .copyBtn .copyIcon {
+  color: var(--small-txt-color);
+}
+
+.setupPassPhrase_box .cancelBtn {
+  text-align: center;
+  margin-top: 30px;
+  font-weight: 500;
+  color: var(--small-txt-color);
+}
+
+.setupPassPhrase_box .cancelBtnTxt {
+  text-decoration: none;
+}
+
+.secure_box {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  border-radius: 5px;
+  padding: 20px;
+  border-left: 4px solid var(--button-color);
+}
+
+.secure_box_secure_box {
+  display: flex;
+  flex-direction: column;
+}
+
+.secure_box .secure_box_secure_box .secure_box_securePassTxt {
+  font-weight: bold;
+}
+
+.secure_box_right_icon {
+  color: var(--button-color);
+  font-size: 50px;
+}
