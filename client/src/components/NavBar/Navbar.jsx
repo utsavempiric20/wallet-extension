@@ -9,7 +9,6 @@ import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { FaPlus } from "react-icons/fa6";
 import { TfiImport } from "react-icons/tfi";
 import { FiCopy } from "react-icons/fi";
-import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -24,6 +23,11 @@ const Navbar = () => {
 
   const handleImportAccount = () => {
     navigate("/recover-account");
+    handleClose();
+  };
+
+  const handelCreateAccount = () => {
+    navigate("/create-account");
     handleClose();
   };
 
@@ -99,13 +103,12 @@ const Navbar = () => {
 
             <button
               className={Style.findAccountCBtn}
-              type="submit"
               onClick={handleImportAccount}
             >
               <TfiImport />
               Import Account
             </button>
-            <button className={Style.copyBtn}>
+            <button className={Style.copyBtn} onClick={handelCreateAccount}>
               <FaPlus className={Style.copyIcon} /> Create New Account
             </button>
           </Box>

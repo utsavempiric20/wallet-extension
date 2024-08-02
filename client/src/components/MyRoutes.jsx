@@ -13,6 +13,7 @@ import UnlockWallet from "./CreateWallet/UnlockWallet/UnlockWallet";
 import ForgotPassword from "./CreateWallet/ForgotPassword/ForgotPassword";
 import HomeComponent from "./HomeComponent/HomeComponent";
 import Profile from "./Profile/Profile";
+import CreateAccount from "./CreateWallet/CreateAccount/CreateAccount";
 
 const MyRoutes = () => {
   return (
@@ -37,6 +38,7 @@ const MyRoutes = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/home" element={<HomeComponent />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/create-account" element={<CreateAccount />} />
       </Routes>
     </div>
   );
