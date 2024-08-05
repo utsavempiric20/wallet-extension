@@ -13,6 +13,7 @@ const CreateAccount = () => {
 
   const addAccountName = (event) => {
     event.preventDefault();
+    console.log(accountName);
     handleAlert();
   };
   const checkDataDisabled = () => {

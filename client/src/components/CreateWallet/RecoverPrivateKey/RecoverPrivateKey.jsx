@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Style from "./RecoverSeedPhrase.module.css";
+import Style from "./RecoverPrivateKey.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import AlertComponent from "../../AlertComponent/AlertComponent";
 import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";

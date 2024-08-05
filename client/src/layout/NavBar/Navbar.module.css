@@ -103,7 +103,7 @@
 }
 
 .copyBtn {
-  border: none;
+  border: 1px solid var(--button-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,7 +113,7 @@
   width: 100%;
   text-decoration: none;
   margin-top: 20px;
-  background-color: rgb(240, 240, 241);
+  background-color: transparent;
   color: var(--button-color);
   gap: 8px;
 }

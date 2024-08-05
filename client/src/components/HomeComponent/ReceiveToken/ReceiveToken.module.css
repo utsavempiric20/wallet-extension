@@ -1,0 +1,187 @@
+.receiveToken {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+.receiveToken_box {
+  border: 3px solid rgb(245, 245, 245);
+  height: 600px;
+  width: 500px;
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.account_icon_box {
+  border-radius: 50%;
+  background-color: var(--button-color);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.account_icon_box .account_icon_txt {
+  font-weight: 500;
+  font-size: 18px;
+  color: white;
+}
+
+.receiveToken_box h4 {
+  margin: 15px 0px;
+}
+
+.accountAddress_box {
+  background-color: rgb(214, 237, 255);
+  padding: 15px;
+  color: rgb(0, 84, 151);
+  font-weight: normal;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border-radius: 10px;
+}
+
+.accountAddress_box .copyIcon {
+  cursor: pointer;
+}
+
+.showKeyBtn {
+  border: 1px solid var(--button-color);
+  color: var(--button-color);
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+  text-decoration: none;
+  bottom: 0;
+  margin-top: 25px;
+}
+
+.nextBtn:disabled {
+  opacity: 50%;
+}
+
+.password_box {
+  margin-top: 30px;
+  position: relative;
+}
+
+.password_box input {
+  border: none;
+  height: 50px;
+  background-color: rgb(250, 250, 250);
+}
+
+.password_box .password_box_eye {
+  position: absolute;
+  top: 20px;
+  right: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 50px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.dialogTitle {
+  font-weight: bold;
+}
+
+.dialog_account_txt {
+  margin-top: 15px;
+  font-weight: 400;
+}
+
+.dialog_accountAddress_box {
+  background-color: rgb(214, 237, 255);
+  padding: 10px;
+  color: rgb(0, 84, 151);
+  font-weight: normal;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border-radius: 10px;
+}
+
+.dialog_accountAddress_box .copyIcon {
+  cursor: pointer;
+}
+
+.password_box label {
+  margin: 8px 0px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.bottomBtnDialogComponent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.bottomBtnDialogComponent .nextBtn {
+  border: none;
+  color: white;
+  background-color: var(--button-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+  text-decoration: none;
+}
+
+.bottomBtnDialogComponent .cancelBtn {
+  border: 1px solid var(--button-color);
+  color: var(--button-color);
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+  text-decoration: none;
+}
+
+.dialog_private_key_title {
+  margin-top: 20px;
+}
+
+.private_key_txt_box {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 5px 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.private_key_txt {
+  word-break: break-all;
+  margin-right: 10px;
+}
+
+.private_key_txt_box .copyIcon {
+  font-size: 20px;
+  cursor: pointer;
+}

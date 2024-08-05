@@ -1,0 +1,181 @@
+.accounts_dropDown {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.accounts_dropDown_icon_box {
+  border-radius: 50%;
+  background-color: var(--button-color);
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accounts_dropDown_icon_box .icon_txt {
+  font-weight: 500;
+  font-size: 14px;
+  color: white;
+}
+
+.homeMainDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+.home_box {
+  border: 3px solid rgb(245, 245, 245);
+  height: 600px;
+  width: 500px;
+  border-radius: 5px;
+  overflow-y: auto;
+}
+
+.home_box h1 {
+  margin-top: 20px;
+}
+
+.home_box h5 {
+  margin-top: 20px;
+}
+
+.home_box_three_item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+  margin-top: 40px;
+}
+
+.home_box .icon_box {
+  background-color: var(--button-color);
+  border-radius: 20px;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon_box .sendIcon {
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+}
+
+.icon_main_box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.icon_main_box .sendIcon_txt {
+  font-size: 15px;
+}
+
+.icons_link_txt {
+  text-decoration: none;
+  color: var(--small-txt-color);
+}
+
+.dialogTitle {
+  text-align: center;
+}
+
+.search_box_seed label {
+  margin: 8px 0px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.search_box_seed input {
+  height: 50px;
+  background-color: rgb(250, 250, 250);
+}
+
+.yourAccountTxt {
+  text-align: left;
+  margin-bottom: 10px;
+  padding: 0px 15px;
+}
+
+.accounts_list_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 15px;
+  cursor: pointer;
+}
+
+.accounts_list_box:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.accounts_list_box .token_icon_box {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}
+
+.icon_box {
+  border-radius: 50%;
+  background-color: var(--button-color);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon_box .icon_txt {
+  font-weight: 500;
+  font-size: 18px;
+  color: white;
+}
+
+.token_icon_box .token_txt_box {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.token_txt_box .toke_big_txt {
+  font-weight: 600;
+}
+
+.token_txt_box .toke_small_txt {
+  font-size: 15px;
+  color: var(--small-txt-color);
+}
+
+.token_icon_box .tokenPrice_box {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.tokenPrice_box .tokenPriceTxt {
+  font-weight: 600;
+}
+
+.tokenPrice_box .tokenSmall_PriceTxt {
+  font-size: 15px;
+  color: var(--small-txt-color);
+}
+
+.send_confirm_box {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}

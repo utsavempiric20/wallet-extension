@@ -1,0 +1,149 @@
+.senToken {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+  position: relative;
+}
+
+.senToken_box {
+  border: 3px solid rgb(245, 245, 245);
+  height: 600px;
+  width: 500px;
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.accountName_box {
+  margin-top: 20px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.senToken_box .accountName_box {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+}
+
+.accountName_box .accountNameTxt {
+  font-size: 17px;
+  color: var(--button-color);
+}
+
+.accountName_box .accountAddress_txt {
+  font-size: 15px;
+  color: var(--small-txt-color);
+}
+
+.bottomBtnComponent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 200px;
+  bottom: 0;
+}
+
+.bottomBtnComponent .nextBtn {
+  border: none;
+  color: white;
+  background-color: var(--button-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+  text-decoration: none;
+}
+
+.bottomBtnComponent .cancelBtn {
+  border: 1px solid var(--button-color);
+  color: var(--button-color);
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+  text-decoration: none;
+  bottom: 0;
+}
+
+.amount_box {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.amount_box .amountTxt {
+  font-size: 18px;
+}
+
+.amount_box .amount_box_seed {
+  padding: 0px 15px;
+  margin-top: 10px;
+}
+
+.amount_box .amount_box_seed input {
+  height: 50px;
+  background-color: rgb(250, 250, 250);
+}
+
+.tokens_list_box {
+  display: flex;
+  align-items: start;
+  background-color: rgb(250, 250, 250);
+  height: 60px;
+  cursor: pointer;
+  padding: 5px 10px;
+  width: 275px;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+
+.tokens_list_box .token_icon_box {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}
+
+.icon_box {
+  border-radius: 50%;
+  background-color: var(--button-color);
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon_box .icon_txt {
+  font-weight: 500;
+  font-size: 16px;
+  color: white;
+}
+
+.token_icon_box .token_txt_box {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.token_txt_box .toke_big_txt {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.token_txt_box .toke_small_txt {
+  font-size: 15px;
+  color: var(--small-txt-color);
+}

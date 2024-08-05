@@ -1,0 +1,153 @@
+.tokenTab_list_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* border-bottom: 2px solid rgb(240, 240, 240); */
+  padding: 20px 25px 20px 25px;
+  cursor: pointer;
+}
+
+.tokenTab_list_box:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.tokenTab_list_box .token_icon_box {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}
+
+.icon_box {
+  border-radius: 50%;
+  background-color: var(--button-color);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon_box .icon_txt {
+  font-weight: 500;
+  font-size: 18px;
+  color: white;
+}
+
+.token_icon_box .token_txt_box {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.token_txt_box .toke_big_txt {
+  font-weight: 600;
+}
+
+.token_txt_box .toke_small_txt {
+  font-size: 15px;
+  color: var(--small-txt-color);
+}
+
+.tokenPriceTxt {
+  font-weight: 600;
+  color: var(--small-txt-color);
+}
+
+.import_token_box {
+  color: var(--button-color);
+  text-align: left;
+  padding: 20px 25px;
+  cursor: pointer;
+  /* font-weight: 500; */
+}
+
+.import_token_box .add_icon {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.bottomBtnComponent .nextBtn {
+  border: none;
+  color: white;
+  background-color: var(--button-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+  text-decoration: none;
+}
+
+.bottomBtnComponent .nextBtn:disabled {
+  opacity: 50%;
+}
+
+.manualImportTokensTextField label {
+  margin: 8px 0px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.manualImportTokensTextField input {
+  height: 50px;
+  background-color: rgb(243 244 246 / 1);
+  border: 2px solid rgb(229, 229, 230);
+}
+
+.bottomBtnDialog2Component {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.bottomBtnDialog2Component .nextBtn {
+  border: none;
+  color: white;
+  background-color: var(--button-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+  text-decoration: none;
+}
+
+.bottomBtnDialog2Component .backBtn {
+  border: 1px solid var(--button-color);
+  color: var(--button-color);
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+  text-decoration: none;
+}
+
+.tokenTab_dialog2_list_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* border-bottom: 2px solid rgb(240, 240, 240); */
+  padding: 50px 0px;
+  cursor: pointer;
+}
+
+.tokenTab_dialog2_list_box .token_icon_box {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}
+
+.dialogTitle {
+  font-weight: 600;
+}
