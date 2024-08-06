@@ -12,14 +12,12 @@ const CreateAccountMain = () => {
           with BLUESKY Wallet.
         </p>
         <div className={Style.createAccountMain_btn_box}>
-          <Link to="/create">
+          <Link to="/create" style={{ textDecoration: "none" }}>
             <div className={Style.createAccountBtn}>Create Account</div>
           </Link>
           <div className={Style.orTxt}>or</div>
-          <Link to="/recover-account" style={{ textDecoration: "none" }}>
-            <div className={Style.importAccountBtn}>
-              Import Existing Account
-            </div>
+          <Link to="/import-wallet" style={{ textDecoration: "none" }}>
+            <div className={Style.createAccountBtn}>Import Wallet</div>
           </Link>
         </div>
       </div>

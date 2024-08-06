@@ -1,20 +1,42 @@
 import React, { useState, useEffect } from "react";
 import Style from "./CreateAccount.module.css";
 import AlertComponent from "../../AlertComponent/AlertComponent";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const CreateAccount = () => {
+const CreateAccount = (props) => {
+  const navigate = useNavigate();
+  const { userDetails } = props;
   const [accountName, setAccountName] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
-  const [displayAlert, setDisplayAlert] = useState(false);
-
+  const [showAlert, setShowAlert] = useState({
+    message: "",
+    type: "",
+    isDisplay: false,
+  });
   const handleAccountName = (e) => {
     setAccountName(e.target.value);
   };
 
   const addAccountName = (event) => {
     event.preventDefault();
-    console.log(accountName);
-    handleAlert();
+
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/wallet/addUserAccount/${userDetails.userId}`,
+        { accountName }
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.data.success === 1) {
+          navigate("/home", { replace: true });
+          setAccountName("");
+        }
+      })
+      .catch((error) => {
+        handleAlert(error.response.data.data, "error", true);
+        console.log(error);
+      });
   };
   const checkDataDisabled = () => {
     if (accountName !== "") {
@@ -24,10 +46,10 @@ const CreateAccount = () => {
     }
   };
 
-  const handleAlert = () => {
-    setDisplayAlert(true);
+  const handleAlert = (message, type, isDisplay) => {
+    setShowAlert({ message, type, isDisplay });
     setTimeout(() => {
-      setDisplayAlert(false);
+      setShowAlert({ message: "", type: "", isDisplay: false });
     }, 4000);
     clearTimeout();
   };
@@ -70,8 +92,8 @@ const CreateAccount = () => {
           Create Account
         </button>
       </div>
-      {displayAlert && (
-        <AlertComponent type="error" message="Account Not created" />
+      {showAlert.isDisplay && (
+        <AlertComponent type={showAlert.type} message={showAlert.message} />
       )}
     </div>
   );

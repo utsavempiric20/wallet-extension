@@ -5,7 +5,8 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import AlertComponent from "../../AlertComponent/AlertComponent";
 import axios from "axios";
 
-const ForgotPassword = () => {
+const ImportWallet = (props) => {
+  const { userDetails } = props;
   const navigate = useNavigate();
   const [seedPhraseInfo, setSeedPhraseInfo] = useState({
     seedPhrase: "",
@@ -13,14 +14,14 @@ const ForgotPassword = () => {
     confirmPassword: "",
   });
   const [isDisabled, setIsDisabled] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
   const [showAlert, setShowAlert] = useState({
     message: "",
     type: "",
     isDisplay: false,
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSeedPhrase = (e) => {
     const { name, value } = e.target;
@@ -29,9 +30,9 @@ const ForgotPassword = () => {
 
   const checkDataDisabled = () => {
     if (seedPhraseInfo.password !== seedPhraseInfo.confirmPassword) {
-      setErrorMessage(true);
+      setErrorMessage("Passwords do not match");
     } else {
-      setErrorMessage(false);
+      setErrorMessage("");
     }
     if (
       seedPhraseInfo.password !== seedPhraseInfo.confirmPassword ||
@@ -55,24 +56,38 @@ const ForgotPassword = () => {
   const verifyPhrase = (event) => {
     event.preventDefault();
 
-    const userData = {
-      seedPhrase: seedPhraseInfo.seedPhrase,
-      password: seedPhraseInfo.password,
-      confirm_password: seedPhraseInfo.confirmPassword,
-    };
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/wallet/forgotPassword`, userData)
-      .then((res) => {
-        if (res.status === 200 && res.data.success === 1) {
-          navigate("/unlock-wallet", { replace: true });
-          handleAlert(res.data.data, "success", true);
-        }
-        console.log("res", res);
-      })
-      .catch((error) => {
-        handleAlert(error.response.data.data, "error", true);
-        console.log("error", error);
-      });
+    const seedArray = seedPhraseInfo.seedPhrase.split(" ");
+    if (seedArray.length != 12) {
+      handleAlert(
+        "Provided seed phrase must be at least 12 words long",
+        "error",
+        true
+      );
+    } else {
+      const userData = {
+        seedPhrase: seedPhraseInfo.seedPhrase,
+        password: seedPhraseInfo.password,
+        confirm_password: seedPhraseInfo.confirmPassword,
+      };
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/wallet/importWallet`, userData)
+        .then((res) => {
+          if (res.status === 200 && res.data.success === 1) {
+            const userData = {
+              seed: res.data.data.seed,
+              _id: res.data.data._id,
+              isWalletLock: res.data.data.isWalletLock,
+            };
+            localStorage.setItem("userData", JSON.stringify(userData));
+            navigate("/unlock-wallet", { replace: true });
+          }
+          console.log("res", res);
+        })
+        .catch((error) => {
+          handleAlert(error.response.data.data, "error", true);
+          console.log("error", error);
+        });
+    }
   };
 
   useEffect(() => {
@@ -83,9 +98,10 @@ const ForgotPassword = () => {
     <>
       <div className={Style.verifyPassPhrase}>
         <div className={Style.verifyPassPhrase_box}>
-          <h2>Forgot Password</h2>
+          <h2>Import Wallet</h2>
           <p>
-            Enter your recovery phrase to complete the forgot password process.
+            Enter the following word from your recovery phrase to complete the
+            setup process.
           </p>
 
           <div className={Style.verifyPassPhrase_box_seed}>
@@ -147,16 +163,14 @@ const ForgotPassword = () => {
               </div>
             </div>
           </div>
-          {errorMessage && (
-            <p style={{ color: "red" }}>Passwords do not match</p>
-          )}
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           <button
             type="submit"
             className={Style.nextBtn}
             disabled={isDisabled}
             onClick={verifyPhrase}
           >
-            Submit
+            Import
           </button>
         </div>
         {showAlert.isDisplay && (
@@ -167,4 +181,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ImportWallet;

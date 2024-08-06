@@ -73,6 +73,8 @@
   font-size: 16px;
   margin: 0px 10px;
   font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .account_box .tfiArrowCircleDown_icon {
@@ -136,6 +138,8 @@
 }
 
 .secure_box_accountNum_txt {
+  text-overflow: ellipsis;
+  overflow: hidden;
   font-weight: 600;
   font-size: 16px;
 }

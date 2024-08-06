@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import Style from "./CreatePassword.module.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import AlertComponent from "../AlertComponent/AlertComponent";
 
-const CreatePassword = () => {
+const CreatePassword = (props) => {
+  const { userDetails, setUserDetails } = props;
   const navigate = useNavigate();
   const [passwordInfo, setPasswordInfo] = useState({
     password: "",
@@ -34,6 +37,8 @@ const CreatePassword = () => {
       passwordInfo.password !== passwordInfo.confirmPassword ||
       passwordInfo.password === "" ||
       passwordInfo.confirmPassword === "" ||
+      passwordInfo.password.length < 8 ||
+      passwordInfo.confirmPassword.length < 8 ||
       !passwordInfo.firstCheck ||
       !passwordInfo.secondCheck
     ) {
@@ -45,12 +50,38 @@ const CreatePassword = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate("/create-ac", { replace: true });
+    const userData = {
+      password: passwordInfo.password,
+      confirm_password: passwordInfo.confirmPassword,
+    };
+
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/wallet/createWallet`, userData)
+      .then((res) => {
+        console.log(res);
+        if (res.status == 200) {
+          const userData = {
+            seed: res.data.data.seed,
+            _id: res.data.data._id,
+            isWalletLock: res.data.data.isWalletLock,
+          };
+          localStorage.setItem("userData", JSON.stringify(userData));
+          setUserDetails({
+            userId: res.data.data._id,
+            isWalletLock: res.data.data.isWalletLock,
+            seed: res.data.data.seed,
+          });
+          navigate("/create-ac", { replace: true });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
     validatePassword();
-  }, [passwordInfo]);
+  }, [passwordInfo, userDetails]);
 
   return (
     <div className={Style.createPassword}>
@@ -64,6 +95,7 @@ const CreatePassword = () => {
               className="form-control"
               name="password"
               minLength="8"
+              required
               id="password_input"
               placeholder="Enter password"
               value={passwordInfo.password}
@@ -84,7 +116,8 @@ const CreatePassword = () => {
               className="form-control"
               name="confirmPassword"
               minLength="8"
-              id="password_input"
+              required
+              id="confirm_password_input"
               placeholder="Confirm password"
               value={passwordInfo.confirmPassword}
               onChange={handlePassword}

@@ -61,7 +61,7 @@ const TokensTab = () => {
       <div className={Style.tokenTab}>
         <div className={Style.tokenTab_box}>
           {importTokenDataArray.map((element, i) => (
-            <div className={Style.tokenTab_list_box}>
+            <div className={Style.tokenTab_list_box} key={i}>
               <div className={Style.token_icon_box}>
                 <div className={Style.icon_box}>
                   <div className={Style.icon_txt}>U</div>

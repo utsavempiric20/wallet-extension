@@ -3,12 +3,19 @@ import Style from "./RecoverPrivateKey.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import AlertComponent from "../../AlertComponent/AlertComponent";
 import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import axios from "axios";
 
-const RecoverSeedPhrase = () => {
+const RecoverSeedPhrase = (props) => {
   const navigate = useNavigate();
+  const { userDetails } = props;
   const [privateKey, setPrivateKey] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
-  const [displayAlert, setDisplayAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState({
+    message: "",
+    type: "",
+    isDisplay: false,
+  });
+
   const [manualImportData, setManualImportData] = useState({
     passphrase: "",
     accountId: "",
@@ -29,11 +36,11 @@ const RecoverSeedPhrase = () => {
     }
   };
 
-  const handleAlert = () => {
-    setDisplayAlert(true);
+  const handleAlert = (message, type, isDisplay) => {
+    setShowAlert({ message, type, isDisplay });
     setTimeout(() => {
-      setDisplayAlert(false);
-    }, 3000);
+      setShowAlert({ message: "", type: "", isDisplay: false });
+    }, 4000);
     clearTimeout();
   };
 
@@ -51,12 +58,23 @@ const RecoverSeedPhrase = () => {
 
   const addPrivateKey = (event) => {
     event.preventDefault();
-    const seedArray = privateKey.split(" ");
-    if (seedArray.length != 12) {
-      handleAlert();
-    } else {
-      navigate("/recover-seed-phrase");
-    }
+    const userData = {
+      privateKey: privateKey,
+      userId: userDetails.userId,
+    };
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/wallet/importAccount`, userData)
+      .then((res) => {
+        console.log(res);
+        if (res.data.success === 1) {
+          navigate("/home", { replace: true });
+          setPrivateKey("");
+        }
+      })
+      .catch((error) => {
+        handleAlert(error.response.data.data, "error", true);
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -107,11 +125,8 @@ const RecoverSeedPhrase = () => {
             </div>
           </div>
         </div>
-        {displayAlert && (
-          <AlertComponent
-            type="error"
-            message="Provided seed phrase must be at least 12 words long"
-          />
+        {showAlert.isDisplay && (
+          <AlertComponent type={showAlert.type} message={showAlert.message} />
         )}
       </div>
       <Dialog

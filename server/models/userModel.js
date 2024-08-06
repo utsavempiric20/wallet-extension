@@ -22,7 +22,7 @@ const usersSchema = new mongoose.Schema({
   ],
   isWalletLock: {
     type: Number,
-    default: 0, // 0 : unlocked , 1 : locked
+    default: 1, // 0 : unlocked , 1 : locked
   },
 });
 

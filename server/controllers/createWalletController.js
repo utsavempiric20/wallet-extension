@@ -1,7 +1,6 @@
 import { ethers } from "ethers";
 import bcrypt from "bcrypt";
 import userModel from "../models/userModel.js";
-import mongoose from "mongoose";
 
 const createPasswordForWallet = async (req, res) => {
   let { password, confirm_password } = req.body;
@@ -312,7 +311,7 @@ const importWallet = async (req, res) => {
     } else {
       return res.status(200).json({
         success: 1,
-        data: user.accounts,
+        data: user,
       });
     }
   }
@@ -415,7 +414,7 @@ const lockAndUnlockWallet = async (req, res) => {
     } else {
       await userModel.updateOne({ _id: userId }, { $set: { isWalletLock: 0 } });
       return res.status(200).json({
-        success: 1,
+        success: 2,
         data: "wallet successfully unlocked",
       });
     }

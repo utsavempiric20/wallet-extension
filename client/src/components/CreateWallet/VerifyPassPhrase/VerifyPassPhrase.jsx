@@ -3,8 +3,10 @@ import Style from "./VerifyPassPhrase.module.css";
 import { useNavigate } from "react-router-dom";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import AlertComponent from "../../AlertComponent/AlertComponent";
+import axios from "axios";
 
-const VerifyPassPhrase = () => {
+const VerifyPassPhrase = (props) => {
+  const { userDetails } = props;
   const navigate = useNavigate();
   const [seedPhraseInfo, setSeedPhraseInfo] = useState({
     seedPhrase: "",
@@ -12,10 +14,14 @@ const VerifyPassPhrase = () => {
     confirmPassword: "",
   });
   const [isDisabled, setIsDisabled] = useState(true);
-  const [displayAlert, setDisplayAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState({
+    message: "",
+    type: "",
+    isDisplay: false,
+  });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSeedPhrase = (e) => {
     const { name, value } = e.target;
@@ -24,9 +30,9 @@ const VerifyPassPhrase = () => {
 
   const checkDataDisabled = () => {
     if (seedPhraseInfo.password !== seedPhraseInfo.confirmPassword) {
-      setErrorMessage(true);
+      setErrorMessage("Passwords do not match");
     } else {
-      setErrorMessage(false);
+      setErrorMessage("");
     }
     if (
       seedPhraseInfo.password !== seedPhraseInfo.confirmPassword ||
@@ -39,10 +45,10 @@ const VerifyPassPhrase = () => {
     }
   };
 
-  const handleAlert = () => {
-    setDisplayAlert(true);
+  const handleAlert = (message, type, isDisplay) => {
+    setShowAlert({ message, type, isDisplay });
     setTimeout(() => {
-      setDisplayAlert(false);
+      setShowAlert({ message: "", type: "", isDisplay: false });
     }, 3000);
     clearTimeout();
   };
@@ -52,9 +58,32 @@ const VerifyPassPhrase = () => {
 
     const seedArray = seedPhraseInfo.seedPhrase.split(" ");
     if (seedArray.length != 12) {
-      handleAlert();
+      handleAlert(
+        "Provided seed phrase must be at least 12 words long",
+        "error",
+        true
+      );
     } else {
-      navigate("/unlock-wallet", { replace: true });
+      const userData = {
+        seedPhrase: seedPhraseInfo.seedPhrase,
+        password: seedPhraseInfo.password,
+        confirm_password: seedPhraseInfo.confirmPassword,
+      };
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/wallet/checkSeedPhrase/${userDetails.userId}`,
+          userData
+        )
+        .then((res) => {
+          if (res.status === 200 && res.data.success === 1) {
+            navigate("/unlock-wallet", { replace: true });
+          }
+          console.log("res", res);
+        })
+        .catch((error) => {
+          handleAlert(error.response.data.data, "error", true);
+          console.log("error", error);
+        });
     }
   };
 
@@ -116,7 +145,7 @@ const VerifyPassPhrase = () => {
                 className="form-control"
                 name="confirmPassword"
                 minLength="8"
-                id="password_input"
+                id="confirm_password_input"
                 placeholder="Confirm password"
                 value={seedPhraseInfo.confirmPassword}
                 onChange={handleSeedPhrase}
@@ -131,9 +160,7 @@ const VerifyPassPhrase = () => {
               </div>
             </div>
           </div>
-          {errorMessage && (
-            <p style={{ color: "red" }}>Passwords do not match</p>
-          )}
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           <button
             type="submit"
             className={Style.nextBtn}
@@ -143,11 +170,8 @@ const VerifyPassPhrase = () => {
             Verify & Complete
           </button>
         </div>
-        {displayAlert && (
-          <AlertComponent
-            type="error"
-            message="Provided seed phrase must be at least 12 words long"
-          />
+        {showAlert.isDisplay && (
+          <AlertComponent type={showAlert.type} message={showAlert.message} />
         )}
       </div>
     </>

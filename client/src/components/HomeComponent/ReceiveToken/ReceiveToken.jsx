@@ -4,8 +4,12 @@ import { FiCopy } from "react-icons/fi";
 import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import AlertComponent from "../../AlertComponent/AlertComponent";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const ReceiveToken = () => {
+const ReceiveToken = (props) => {
+  const { userDetails, selectedAccount } = props;
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -14,32 +18,90 @@ const ReceiveToken = () => {
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
 
-  const [password, setPassword] = useState("");
+  const [showPrivateKey, setShowPrivateKey] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState(false);
+  const [passwordInfo, setPasswordInfo] = useState({
+    password: "",
+    confirm_password: "",
+  });
+  const [showAlert, setShowAlert] = useState({
+    message: "",
+    type: "",
+    isDisplay: false,
+  });
 
   const handlePassword = (e) => {
-    setPassword(e.target.value);
+    const { name, value } = e.target;
+    setPasswordInfo({
+      ...passwordInfo,
+      [name]: value,
+    });
   };
 
-  const handleSubmit = (event) => {
+  const handleDialog1 = (event) => {
     event.preventDefault();
-    // handleAlert();
-    handleClose();
-    handleOpen2();
+    const userData = {
+      userId: userDetails.userId,
+      accountAddress: selectedAccount.address,
+      password: passwordInfo.password,
+      confirm_password: passwordInfo.confirm_password,
+      isSecretSeedInfo: 0,
+    };
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/wallet/revealSecretData`,
+        userData
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.status == 200) {
+          setShowPrivateKey(res.data.data);
+          handleClose();
+          handleOpen2();
+          setPasswordInfo({ password: "", confirm_password: "" });
+        }
+      })
+      .catch((error) => {
+        handleAlert(error.response.data.data, "error", true);
+        console.log(error);
+        console.log(error.response.data.data);
+      });
   };
 
-  const handleAlert = () => {
-    setErrorMessage(true);
+  const accountAvatarName = (name) => {
+    const singleChar = name.charAt(0);
+    for (let i = 0; i < name.length; i++) {
+      const char = name[i];
+      if (char >= "0" && char <= "9") {
+        return singleChar + char;
+      }
+    }
+    return null;
+  };
+  const handleAlert = (message, type, isDisplay) => {
+    setShowAlert({ message, type, isDisplay });
     setTimeout(() => {
-      setErrorMessage(false);
+      setShowAlert({ message: "", type: "", isDisplay: false });
     }, 4000);
     clearTimeout();
   };
 
   const checkDataDisabled = () => {
-    if (password === "") {
+    if (passwordInfo.password !== passwordInfo.confirm_password) {
+      setErrorMessage(true);
+    } else {
+      setErrorMessage(false);
+    }
+    if (
+      passwordInfo.password !== passwordInfo.confirm_password ||
+      passwordInfo.password === "" ||
+      passwordInfo.confirm_password === "" ||
+      passwordInfo.password.length < 8 ||
+      passwordInfo.confirm_password.length < 8
+    ) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
@@ -48,26 +110,27 @@ const ReceiveToken = () => {
 
   useEffect(() => {
     checkDataDisabled();
-  }, [password]);
+  }, [passwordInfo]);
   return (
     <>
       <div className={Style.receiveToken}>
         <div className={Style.receiveToken_box}>
           <center>
             <div className={Style.account_icon_box}>
-              <div className={Style.account_icon_txt}>A1</div>
+              <div className={Style.account_icon_txt}>
+                {selectedAccount &&
+                  accountAvatarName(selectedAccount.accountName)}
+              </div>
             </div>
           </center>
 
-          <h4>Account1</h4>
+          <h4>{selectedAccount && selectedAccount.accountName}</h4>
           <div className={Style.accountAddress_box}>
-            <div>0x96D590A01E2954124D30F9C29e32ba0Fe29d76Bc</div>
+            <div>{selectedAccount && selectedAccount.address}</div>
             <FiCopy
               className={Style.copyIcon}
               onClick={() => {
-                navigator.clipboard.writeText(
-                  "0x96D590A01E2954124D30F9C29e32ba0Fe29d76Bc"
-                );
+                navigator.clipboard.writeText(selectedAccount.address);
               }}
             />
           </div>
@@ -94,17 +157,20 @@ const ReceiveToken = () => {
         <DialogContent>
           <center>
             <div className={Style.account_icon_box}>
-              <div className={Style.account_icon_txt}>A1</div>
+              <div className={Style.account_icon_txt}>
+                {selectedAccount &&
+                  accountAvatarName(selectedAccount.accountName)}
+              </div>
             </div>
-            <h4 className={Style.dialog_account_txt}>Account1</h4>
+            <h4 className={Style.dialog_account_txt}>
+              {selectedAccount && selectedAccount.accountName}
+            </h4>
             <div className={Style.dialog_accountAddress_box}>
-              <div>0x96D590A01E2954124D30F9C29e32ba0Fe29d76Bc</div>
+              <div>{selectedAccount && selectedAccount.address}</div>
               <FiCopy
                 className={Style.copyIcon}
                 onClick={() => {
-                  navigator.clipboard.writeText(
-                    "0x96D590A01E2954124D30F9C29e32ba0Fe29d76Bc"
-                  );
+                  navigator.clipboard.writeText(selectedAccount.address);
                 }}
               />
             </div>
@@ -112,7 +178,7 @@ const ReceiveToken = () => {
 
           <div className={Style.password_box}>
             <div className="mb-3">
-              <label htmlFor="accountName_input">Enter your password</label>
+              <label htmlFor="accountName_input">Password</label>
               <input
                 type={showPassword ? "text" : "password"}
                 className="form-control"
@@ -120,7 +186,7 @@ const ReceiveToken = () => {
                 minLength="8"
                 id="password_input"
                 placeholder="Enter password"
-                value={password}
+                value={passwordInfo.password}
                 onChange={handlePassword}
               />
               <div
@@ -131,6 +197,30 @@ const ReceiveToken = () => {
               </div>
             </div>
           </div>
+          <div className={Style.password_box}>
+            <div className="mb-3">
+              <label htmlFor="accountName_input">Confirm password</label>
+              <input
+                type={showPassword ? "text" : "password"}
+                className="form-control"
+                name="confirm_password"
+                minLength="8"
+                id="confirm_password_input"
+                placeholder="Enter password"
+                value={passwordInfo.confirm_password}
+                onChange={handlePassword}
+              />
+              <div
+                className={Style.password_box_eye}
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? <IoMdEye /> : <IoMdEyeOff />}
+              </div>
+            </div>
+          </div>
+          {errorMessage && (
+            <p style={{ color: "red" }}>Passwords do not match</p>
+          )}
           <Box className={Style.bottomBtnDialogComponent}>
             <button
               className={Style.cancelBtn}
@@ -143,15 +233,12 @@ const ReceiveToken = () => {
             <button
               className={Style.nextBtn}
               type="submit"
-              onClick={handleSubmit}
+              onClick={handleDialog1}
               disabled={isDisabled}
             >
               Confirm
             </button>
           </Box>
-          {errorMessage && (
-            <AlertComponent type="error" message="you entered wrong password" />
-          )}
         </DialogContent>
       </Dialog>
 
@@ -172,17 +259,20 @@ const ReceiveToken = () => {
         <DialogContent>
           <center>
             <div className={Style.account_icon_box}>
-              <div className={Style.account_icon_txt}>A1</div>
+              <div className={Style.account_icon_txt}>
+                {selectedAccount &&
+                  accountAvatarName(selectedAccount.accountName)}
+              </div>
             </div>
-            <h4 className={Style.dialog_account_txt}>Account1</h4>
+            <h4 className={Style.dialog_account_txt}>
+              {selectedAccount && selectedAccount.accountName}
+            </h4>
             <div className={Style.dialog_accountAddress_box}>
-              <div>0x96D590A01E2954124D30F9C29e32ba0Fe29d76Bc</div>
+              <div>{selectedAccount && selectedAccount.address}</div>
               <FiCopy
                 className={Style.copyIcon}
                 onClick={() => {
-                  navigator.clipboard.writeText(
-                    "0x96D590A01E2954124D30F9C29e32ba0Fe29d76Bc"
-                  );
+                  navigator.clipboard.writeText(selectedAccount.address);
                 }}
               />
             </div>
@@ -192,15 +282,11 @@ const ReceiveToken = () => {
             Private key for Account 1
           </div>
           <div className={Style.private_key_txt_box}>
-            <div className={Style.private_key_txt}>
-              57b9c34cf1976bd3800f648e6ec5e31e5fb4ee5fc838edf11c24aa836f7992d0
-            </div>
+            <div className={Style.private_key_txt}>{showPrivateKey}</div>
             <FiCopy
               className={Style.copyIcon}
               onClick={() => {
-                navigator.clipboard.writeText(
-                  "57b9c34cf1976bd3800f648e6ec5e31e5fb4ee5fc838edf11c24aa836f7992d0"
-                );
+                navigator.clipboard.writeText(showPrivateKey);
               }}
             />
           </div>
@@ -213,11 +299,14 @@ const ReceiveToken = () => {
               Done
             </button>
           </Box>
-          {errorMessage && (
-            <AlertComponent type="error" message="you entered wrong password" />
+          {showAlert.isDisplay && (
+            <AlertComponent type={showAlert.type} message={showAlert.message} />
           )}
         </DialogContent>
       </Dialog>
+      {showAlert.isDisplay && (
+        <AlertComponent type={showAlert.type} message={showAlert.message} />
+      )}
     </>
   );
 };

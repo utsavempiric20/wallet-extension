@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import CreateAccountMain from "./CreateAccountMain/CreateAccountMain";
 import CreatePassword from "./CreateWallet/CreatePassword";
 import Navbar from "../layout/NavBar/Navbar";
@@ -17,37 +17,100 @@ import CreateAccount from "./CreateWallet/CreateAccount/CreateAccount";
 import FindAccounts from "./HomeComponent/SendComponent/FindAccounts/FindAccounts";
 import SendToken from "./HomeComponent/SendComponent/SendToken/SendToken";
 import ReceiveToken from "./HomeComponent/ReceiveToken/ReceiveToken";
+import ImportWallet from "./CreateWallet/importWallet/importWallet";
 
-const MyRoutes = () => {
+const MyRoutes = (props) => {
+  const navigate = useNavigate();
+  const { userDetails, setUserDetails, selectedAccount, setSelectedAccount } =
+    props;
+  useEffect(() => {
+    const userDetails = JSON.parse(localStorage.getItem("userData"));
+    if (userDetails === null) {
+      navigate("/", { replace: true });
+    } else {
+      if (userDetails.isWalletLock === 1) {
+        navigate("/unlock-wallet", { replace: true });
+      } else {
+        navigate("/home", { replace: true });
+      }
+    }
+  }, []);
+
   return (
     <div>
-      <Navbar />
+      <Navbar userDetails={userDetails} selectedAccount={selectedAccount} />
       <Routes>
         <Route path="/" element={<CreateAccountMain />} />
 
-        <Route path="/create" element={<CreatePassword />} />
+        <Route
+          path="/create"
+          element={
+            <CreatePassword
+              userDetails={userDetails}
+              setUserDetails={setUserDetails}
+            />
+          }
+        />
         <Route path="/create-ac" element={<CreateAccountContent />} />
+        <Route path="/import-wallet" element={<ImportWallet />} />
         <Route path="/recover-account" element={<ImportAccount />} />
-        <Route path="/recover-seed-phrase" element={<RecoverSeedPhrase />} />
+        <Route
+          path="/recover-seed-phrase"
+          element={<RecoverSeedPhrase userDetails={userDetails} />}
+        />
         <Route
           path="/set-recovery-implicit-account"
           element={<ChooseSecurityMethod />}
         />
         <Route
           path="/setup-passphrase-new-account"
-          element={<SetupPassPhrase />}
+          element={<SetupPassPhrase userDetails={userDetails} />}
         />
-        <Route path="/verify-phrase" element={<VerifyPassPhrase />} />
-        <Route path="/unlock-wallet" element={<UnlockWallet />} />
+        <Route
+          path="/verify-phrase"
+          element={<VerifyPassPhrase userDetails={userDetails} />}
+        />
+        <Route
+          path="/unlock-wallet"
+          element={
+            <UnlockWallet
+              userDetails={userDetails}
+              setUserDetails={setUserDetails}
+            />
+          }
+        />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        <Route path="/home" element={<HomeComponent />} />
+        <Route
+          path="/home"
+          element={
+            <HomeComponent
+              userDetails={userDetails}
+              selectedAccount={selectedAccount}
+              setSelectedAccount={setSelectedAccount}
+            />
+          }
+        />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/create-account" element={<CreateAccount />} />
+        <Route
+          path="/create-account"
+          element={<CreateAccount userDetails={userDetails} />}
+        />
 
-        <Route path="/find-accounts" element={<FindAccounts />} />
+        <Route
+          path="/find-accounts"
+          element={<FindAccounts userDetails={userDetails} />}
+        />
         <Route path="/send-token" element={<SendToken />} />
-        <Route path="/receive-token" element={<ReceiveToken />} />
+        <Route
+          path="/receive-token"
+          element={
+            <ReceiveToken
+              userDetails={userDetails}
+              selectedAccount={selectedAccount}
+            />
+          }
+        />
       </Routes>
     </div>
   );

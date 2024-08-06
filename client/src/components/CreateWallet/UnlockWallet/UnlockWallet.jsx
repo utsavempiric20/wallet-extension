@@ -3,13 +3,19 @@ import Style from "./UnlockWallet.module.css";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import AlertComponent from "../../AlertComponent/AlertComponent";
+import axios from "axios";
 
-const UnlockWallet = () => {
+const UnlockWallet = (props) => {
+  const { userDetails, setUserDetails } = props;
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [showAlert, setShowAlert] = useState({
+    message: "",
+    type: "",
+    isDisplay: false,
+  });
 
   const handlePassword = (e) => {
     setPassword(e.target.value);
@@ -17,14 +23,35 @@ const UnlockWallet = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate("/home", { replace: true });
-    // handleAlert();
+    const userData = {
+      userId: userDetails.userId,
+      password: password,
+    };
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/wallet/lockAndUnlockWallet`,
+        userData
+      )
+      .then((res) => {
+        if (res.data.success === 2) {
+          const seedData = JSON.parse(localStorage.getItem("userData"));
+          if (seedData) {
+            const updatedData = { ...seedData, isWalletLock: 0 };
+            localStorage.setItem("userData", JSON.stringify(updatedData));
+          }
+          navigate("/home", { replace: true });
+        }
+      })
+      .catch((error) => {
+        handleAlert(error.response.data.data, "error", true);
+        console.log(error);
+      });
   };
 
-  const handleAlert = () => {
-    setErrorMessage(true);
+  const handleAlert = (message, type, isDisplay) => {
+    setShowAlert({ message, type, isDisplay });
     setTimeout(() => {
-      setErrorMessage(false);
+      setShowAlert({ message: "", type: "", isDisplay: false });
     }, 4000);
     clearTimeout();
   };
@@ -78,8 +105,8 @@ const UnlockWallet = () => {
           Unlock Wallet
         </button>
       </div>
-      {errorMessage && (
-        <AlertComponent type="error" message="You entered wrong password" />
+      {showAlert.isDisplay && (
+        <AlertComponent type={showAlert.type} message={showAlert.message} />
       )}
     </div>
   );
