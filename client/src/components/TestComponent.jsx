@@ -1,5 +1,5 @@
 import React from "react";
-import Style from "./CreatePassword/CreatePassword.module.css";
+import Style from "./CreateWallet/CreatePassword.module.css";
 
 const TestComponent = () => {
   return (

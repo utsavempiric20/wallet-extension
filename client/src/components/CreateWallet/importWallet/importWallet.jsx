@@ -6,7 +6,7 @@ import AlertComponent from "../../AlertComponent/AlertComponent";
 import axios from "axios";
 
 const ImportWallet = (props) => {
-  const { userDetails } = props;
+  const { manageUser, setManageuser } = props;
   const navigate = useNavigate();
   const [seedPhraseInfo, setSeedPhraseInfo] = useState({
     seedPhrase: "",
@@ -79,6 +79,7 @@ const ImportWallet = (props) => {
               isWalletLock: res.data.data.isWalletLock,
             };
             localStorage.setItem("userData", JSON.stringify(userData));
+            setManageuser(true);
             navigate("/unlock-wallet", { replace: true });
           }
           console.log("res", res);

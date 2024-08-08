@@ -114,7 +114,6 @@ const HomeComponent = (props) => {
   };
 
   const getAllAccounts = () => {
-    console.log("Calling getAllAccounts");
     setLoading(true);
     axios
       .get(
@@ -122,7 +121,11 @@ const HomeComponent = (props) => {
       )
       .then((res) => {
         setAccountData(res.data.data);
-        // setSelectedAccount(res.data.data[0]);
+        if (selectedAccount != null) {
+          setSelectedAccount(selectedAccount);
+        } else {
+          setSelectedAccount(res.data.data[0]);
+        }
         localStorage.setItem("userAccount", JSON.stringify(res.data.data[0]));
       })
       .catch((err) => {
@@ -132,7 +135,7 @@ const HomeComponent = (props) => {
   };
 
   useEffect(() => {
-    // getAllAccounts();
+    getAllAccounts();
   }, []);
 
   const handleSelectedAccount = (item) => {
@@ -141,13 +144,7 @@ const HomeComponent = (props) => {
     if (accountData) {
       setSelectedAccount(accountData);
     }
-    console.log(accountData);
     handleClose();
-  };
-
-  const handleAccounts = () => {
-    handleOpen();
-    getAllAccounts();
   };
 
   return (
@@ -157,7 +154,7 @@ const HomeComponent = (props) => {
       ) : (
         <div className={Style.homeMainDiv}>
           <div className={Style.home_box}>
-            <div className={Style.accounts_dropDown} onClick={handleAccounts}>
+            <div className={Style.accounts_dropDown} onClick={handleOpen}>
               <div className={Style.accounts_dropDown_icon_box}>
                 <div className={Style.icon_txt}>
                   {selectedAccount &&
@@ -168,7 +165,7 @@ const HomeComponent = (props) => {
               <FaChevronDown />
             </div>
 
-            <h1>{selectedAccount && selectedAccount.balance} USD</h1>
+            <h1>{selectedAccount && selectedAccount.balance} SepoliaEth</h1>
             <div className={Style.home_box_three_item}>
               {iconsArray.map((element, i) => {
                 return (
@@ -284,10 +281,10 @@ const HomeComponent = (props) => {
 
                         <div className={Style.tokenPrice_box}>
                           <div className={Style.tokenPriceTxt}>
-                            {element.balance} USD
+                            {element.balance} SepoliaEth
                           </div>
                           <div className={Style.tokenSmall_PriceTxt}>
-                            {element.balance} USD
+                            {element.balance} SepoliaEth
                           </div>
                         </div>
                       </div>

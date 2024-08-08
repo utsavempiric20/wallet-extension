@@ -46,4 +46,9 @@ createWalletRouter.post(
   createWalletController.lockAndUnlockWallet
 );
 
+createWalletRouter.post(
+  "/fetchUserBalance",
+  createWalletController.fetchUserBalance
+);
+
 export default createWalletRouter;

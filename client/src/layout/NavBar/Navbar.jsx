@@ -14,7 +14,7 @@ import axios from "axios";
 import AlertComponent from "../../components/AlertComponent/AlertComponent";
 
 const Navbar = (props) => {
-  const { userDetails, selectedAccount } = props;
+  const { userDetails, selectedAccount, setSelectedAccount } = props;
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("home");
   const [open, setOpen] = useState(false);
@@ -64,6 +64,7 @@ const Navbar = (props) => {
           if (seedData) {
             const updatedData = { ...seedData, isWalletLock: 1 };
             localStorage.setItem("userData", JSON.stringify(updatedData));
+            setSelectedAccount(null);
           }
           handleClose();
         }
@@ -86,35 +87,39 @@ const Navbar = (props) => {
         <div className="container-fluid">
           <div className={Style.navBar_container_box}>
             <img src={logo} alt="logo" height={40} width={180} />
-            <ul className={Style.navBar_wallet_tabs}>
-              <li
-                className={activeTab === "home" ? Style.active : ""}
-                onClick={() => handleTabClick("home")}
-              >
-                <Link to="/home" className={Style.navBar_wallet_box}>
-                  <LuWallet2 className={Style.luWallet_icon} />
-                  <span className={Style.text}>Wallet</span>
-                </Link>
-              </li>
-              <li
-                className={activeTab === "profile" ? Style.active : ""}
-                onClick={() => handleTabClick("profile")}
-              >
-                <Link to="/profile" className={Style.navBar_wallet_box}>
-                  <VscAccount className={Style.luWallet_icon} />
-                  <span className={Style.text}>Account</span>
-                </Link>
-              </li>
-            </ul>
+            {selectedAccount && (
+              <ul className={Style.navBar_wallet_tabs}>
+                <li
+                  className={activeTab === "home" ? Style.active : ""}
+                  onClick={() => handleTabClick("home")}
+                >
+                  <Link to="/home" className={Style.navBar_wallet_box}>
+                    <LuWallet2 className={Style.luWallet_icon} />
+                    <span className={Style.text}>Wallet</span>
+                  </Link>
+                </li>
+                <li
+                  className={activeTab === "profile" ? Style.active : ""}
+                  onClick={() => handleTabClick("profile")}
+                >
+                  <Link to="/profile" className={Style.navBar_wallet_box}>
+                    <VscAccount className={Style.luWallet_icon} />
+                    <span className={Style.text}>Account</span>
+                  </Link>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
-        <div className={Style.account_box} onClick={handleOpen}>
-          <VscAccount className={Style.vsAccount_icon} />
-          <div className={Style.accountNum_txt}>
-            {selectedAccount && selectedAccount.address}
+        {selectedAccount && (
+          <div className={Style.account_box} onClick={handleOpen}>
+            <VscAccount className={Style.vsAccount_icon} />
+            <div className={Style.accountNum_txt}>
+              {selectedAccount && selectedAccount.address}
+            </div>
+            <TfiArrowCircleDown className={Style.tfiArrowCircleDown_icon} />
           </div>
-          <TfiArrowCircleDown className={Style.tfiArrowCircleDown_icon} />
-        </div>
+        )}
       </nav>
       <Dialog
         open={open}

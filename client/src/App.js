@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import MyRoutes from "./components/MyRoutes";
 import React, { useState, useEffect } from "react";
 import { CircularProgress } from "@mui/material";
+import TestComponent from "./components/TestComponent";
 
 function App() {
   const [userDetails, setUserDetails] = useState({
@@ -13,6 +14,7 @@ function App() {
   });
   const [loading, setLoading] = useState(true);
   const [selectedAccount, setSelectedAccount] = useState(null);
+  const [manageUser, setManageuser] = useState(false);
 
   const getUserDetails = () => {
     const userData = JSON.parse(localStorage.getItem("userData"));
@@ -36,10 +38,11 @@ function App() {
     getUserDetails();
     getAccountDetails();
     setLoading(false);
-  }, []);
+  }, [manageUser]);
 
   return (
     <>
+      {/* <TestComponent /> */}
       {loading ? (
         <center>
           <CircularProgress />
@@ -52,6 +55,8 @@ function App() {
               setUserDetails={setUserDetails}
               selectedAccount={selectedAccount}
               setSelectedAccount={setSelectedAccount}
+              manageUser={manageUser}
+              setManageuser={setManageuser}
             />
           </Router>
         </div>

@@ -21,8 +21,14 @@ import ImportWallet from "./CreateWallet/importWallet/importWallet";
 
 const MyRoutes = (props) => {
   const navigate = useNavigate();
-  const { userDetails, setUserDetails, selectedAccount, setSelectedAccount } =
-    props;
+  const {
+    userDetails,
+    setUserDetails,
+    selectedAccount,
+    setSelectedAccount,
+    manageUser,
+    setManageuser,
+  } = props;
   useEffect(() => {
     const userDetails = JSON.parse(localStorage.getItem("userData"));
     if (userDetails === null) {
@@ -38,7 +44,11 @@ const MyRoutes = (props) => {
 
   return (
     <div>
-      <Navbar userDetails={userDetails} selectedAccount={selectedAccount} />
+      <Navbar
+        userDetails={userDetails}
+        selectedAccount={selectedAccount}
+        setSelectedAccount={setSelectedAccount}
+      />
       <Routes>
         <Route path="/" element={<CreateAccountMain />} />
 
@@ -52,7 +62,15 @@ const MyRoutes = (props) => {
           }
         />
         <Route path="/create-ac" element={<CreateAccountContent />} />
-        <Route path="/import-wallet" element={<ImportWallet />} />
+        <Route
+          path="/import-wallet"
+          element={
+            <ImportWallet
+              manageUser={manageUser}
+              setManageuser={setManageuser}
+            />
+          }
+        />
         <Route path="/recover-account" element={<ImportAccount />} />
         <Route
           path="/recover-seed-phrase"

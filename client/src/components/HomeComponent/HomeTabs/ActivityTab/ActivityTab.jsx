@@ -23,8 +23,8 @@ const ActivityTab = () => {
                 </div>
               </div>
               <div className={Style.tokenPrice_box}>
-                <div className={Style.tokenPriceTxt}>-2 USD</div>
-                <div className={Style.tokenSmall_PriceTxt}>-2 USD</div>
+                <div className={Style.tokenPriceTxt}>-2 SepoliaEth</div>
+                <div className={Style.tokenSmall_PriceTxt}>-2 SepoliaEth</div>
               </div>
             </div>
           </div>

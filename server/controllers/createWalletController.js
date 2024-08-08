@@ -317,31 +317,38 @@ const importWallet = async (req, res) => {
   }
 };
 
+const provider = new ethers.JsonRpcProvider("http://127.0.0.1:8545/");
 const importAccount = async (req, res) => {
   const { userId, privateKey } = req.body;
-  const importedUser = await userModel.findOne({
-    accounts: {
-      $elemMatch: {
-        privateKey: privateKey,
-      },
-    },
-  });
 
-  const importedUserAccount =
-    importedUser != null
-      ? importedUser.accounts.find((acc) => acc.privateKey === privateKey)
-      : null;
+  const accountPublicKey = ethers.SigningKey.computePublicKey(privateKey);
+  const accountAddress = ethers.computeAddress(accountPublicKey);
+  const balance = await provider.getBalance(accountAddress);
+  const balanceInEth = ethers.formatEther(balance);
+  console.log("balance : ", balance);
+  console.log("balanceInEth : ", balanceInEth);
+
+  // const importedUser = await userModel.findOne({
+  //   accounts: {
+  //     $elemMatch: {
+  //       privateKey: privateKey,
+  //     },
+  //   },
+  // });
+
+  // const importedUserAccount =
+  //   importedUser != null
+  //     ? importedUser.accounts.find((acc) => acc.privateKey === privateKey)
+  //     : null;
 
   const currentUser = await userModel.findById({ _id: userId });
 
   const currentUserAccount =
-    importedUserAccount != null && currentUser != null
-      ? currentUser.accounts.find(
-          (acc) => acc.address === importedUserAccount.address
-        )
+    currentUser != null
+      ? currentUser.accounts.find((acc) => acc.address === accountAddress)
       : null;
 
-  if (!currentUser || !importedUser) {
+  if (!currentUser) {
     return res.status(400).json({
       success: 0,
       data: "Invalid user",
@@ -364,11 +371,11 @@ const importAccount = async (req, res) => {
       {
         $push: {
           accounts: {
-            accountName: importedUserAccount.accountName,
-            address: importedUserAccount.address,
-            publicKey: importedUserAccount.publicKey,
-            privateKey: importedUserAccount.privateKey,
-            balance: 0,
+            accountName: "Account" + (currentUser.accounts.length + 1),
+            address: accountAddress,
+            publicKey: accountPublicKey,
+            privateKey: privateKey,
+            balance: balanceInEth,
             isImported: 1,
           },
         },
@@ -377,11 +384,11 @@ const importAccount = async (req, res) => {
     return res.status(200).json({
       success: 1,
       data: {
-        accountName: importedUserAccount.accountName,
-        address: importedUserAccount.address,
-        publicKey: importedUserAccount.publicKey,
-        privateKey: importedUserAccount.privateKey,
-        balance: 0,
+        accountName: "Account" + (currentUser.accounts.length + 1),
+        address: accountAddress,
+        publicKey: accountPublicKey,
+        privateKey: privateKey,
+        balance: balanceInEth,
         isImported: 1,
       },
     });
@@ -421,6 +428,32 @@ const lockAndUnlockWallet = async (req, res) => {
   }
 };
 
+const fetchUserBalance = async (req, res) => {
+  // const { address } = req.body;
+  // const user = ethers.computeAddress(address);
+  // // const user = ethers.SigningKey.computePublicKey(address);
+  // const userAccount = await userModel.findOne({
+  //   accounts: { $elemMatch: { address: address } },
+  // });
+  // const user = userAccount.accounts.find(
+  //   (account) => account.address === address
+  // );
+  // if (!user) {
+  //   return res.status(400).json({
+  //     success: 0,
+  //     data: "Invalid user",
+  //   });
+  // }
+  // const balance = await provider.getBalance(address);
+  // const balanceInEth = ethers.formatEther(balance);
+  // console.log("balance --> ", balance);
+  // console.log("balanceInEth --> ", balanceInEth);
+  // return res.status(200).json({
+  //   success: 1,
+  //   data: user,
+  // });
+};
+
 export default {
   createPasswordForWallet,
   checkSeedPhrase,
@@ -432,4 +465,5 @@ export default {
   importWallet,
   importAccount,
   lockAndUnlockWallet,
+  fetchUserBalance,
 };

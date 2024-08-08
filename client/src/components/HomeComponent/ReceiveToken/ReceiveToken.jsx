@@ -6,6 +6,7 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import AlertComponent from "../../AlertComponent/AlertComponent";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import QRCode from "react-qr-code";
 
 const ReceiveToken = (props) => {
   const { userDetails, selectedAccount } = props;
@@ -125,6 +126,13 @@ const ReceiveToken = (props) => {
           </center>
 
           <h4>{selectedAccount && selectedAccount.accountName}</h4>
+          <QRCode
+            size={256}
+            className={Style.qrCode}
+            value={selectedAccount.address}
+            level="H"
+            viewBox={`0 0 256 256`}
+          />
           <div className={Style.accountAddress_box}>
             <div>{selectedAccount && selectedAccount.address}</div>
             <FiCopy

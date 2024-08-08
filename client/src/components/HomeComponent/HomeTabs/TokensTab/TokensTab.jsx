@@ -6,7 +6,7 @@ import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import AlertComponent from "../../../AlertComponent/AlertComponent";
 
 const TokensTab = () => {
-  const importTokenDataArray = [{ tokenName: "USDC", tokenBalance: 5 }];
+  const importTokenDataArray = [{ tokenName: "SepoliaEth", tokenBalance: 5 }];
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -173,8 +173,8 @@ const TokensTab = () => {
                 <div className={Style.icon_txt}>U</div>
               </div>
               <div className={Style.token_txt_box}>
-                <div className={Style.toke_big_txt}>USDC</div>
-                <div className={Style.toke_small_txt}>2 USDC</div>
+                <div className={Style.toke_big_txt}>SepoliaEth</div>
+                <div className={Style.toke_small_txt}>2 SepoliaEth</div>
               </div>
             </div>
           </div>
