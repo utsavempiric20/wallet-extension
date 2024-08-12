@@ -51,4 +51,9 @@ createWalletRouter.post(
   createWalletController.fetchUserBalance
 );
 
+createWalletRouter.post(
+  "/sendTransaction",
+  createWalletController.sendTransaction
+);
+
 export default createWalletRouter;

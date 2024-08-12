@@ -18,12 +18,6 @@ const CreateAccountContent = () => {
           collectibles (NFTs).
         </p>
 
-        <div className={Style.learn_box}>
-          <Link className={Style.learnTxt}>
-            Learn more about BLUESKY <AiOutlineArrowRight />
-          </Link>
-        </div>
-
         <Link
           to="/set-recovery-implicit-account"
           replace

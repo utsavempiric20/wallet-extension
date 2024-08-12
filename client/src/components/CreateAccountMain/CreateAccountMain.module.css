@@ -3,7 +3,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 50px;
+  height: 600px;
+  width: 365px;
 }
 
 .createAccountMainBox h2 {
@@ -11,8 +12,8 @@
 }
 
 .createAccountMainBox p {
-  font-size: 20px;
-  width: 25%;
+  font-size: 18px;
+  margin: 0px 10px;
 }
 
 .createAccountMain_btn_box {
@@ -22,7 +23,7 @@
   width: 30%;
   gap: 1rem;
   flex-direction: row;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .createAccountMain_btn_box .createAccountBtn {
@@ -33,7 +34,7 @@
   background-color: var(--button-color);
   border-radius: 2rem;
   border: none;
-  width: 200px;
+  width: 150px;
   height: 50px;
   font-size: 15px;
   font-weight: 500;

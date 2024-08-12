@@ -2,6 +2,8 @@ import { ethers } from "ethers";
 import bcrypt from "bcrypt";
 import userModel from "../models/userModel.js";
 
+const provider = new ethers.JsonRpcProvider("http://127.0.0.1:8545/");
+
 const createPasswordForWallet = async (req, res) => {
   let { password, confirm_password } = req.body;
 
@@ -25,7 +27,7 @@ const createPasswordForWallet = async (req, res) => {
           address: walletData.address,
           publicKey: walletData.publicKey,
           privateKey: walletData.privateKey,
-          balance: 0,
+          balance: 0.0,
           isImported: 0,
         },
       ],
@@ -200,7 +202,7 @@ const addUserAccount = async (req, res) => {
             address: walletData.address,
             publicKey: walletData.publicKey,
             privateKey: walletData.privateKey,
-            balance: 0,
+            balance: 0.0,
             isImported: 0,
           },
         },
@@ -317,7 +319,6 @@ const importWallet = async (req, res) => {
   }
 };
 
-const provider = new ethers.JsonRpcProvider("http://127.0.0.1:8545/");
 const importAccount = async (req, res) => {
   const { userId, privateKey } = req.body;
 
@@ -325,8 +326,6 @@ const importAccount = async (req, res) => {
   const accountAddress = ethers.computeAddress(accountPublicKey);
   const balance = await provider.getBalance(accountAddress);
   const balanceInEth = ethers.formatEther(balance);
-  console.log("balance : ", balance);
-  console.log("balanceInEth : ", balanceInEth);
 
   // const importedUser = await userModel.findOne({
   //   accounts: {
@@ -429,29 +428,102 @@ const lockAndUnlockWallet = async (req, res) => {
 };
 
 const fetchUserBalance = async (req, res) => {
-  // const { address } = req.body;
-  // const user = ethers.computeAddress(address);
-  // // const user = ethers.SigningKey.computePublicKey(address);
-  // const userAccount = await userModel.findOne({
-  //   accounts: { $elemMatch: { address: address } },
-  // });
-  // const user = userAccount.accounts.find(
-  //   (account) => account.address === address
-  // );
-  // if (!user) {
-  //   return res.status(400).json({
-  //     success: 0,
-  //     data: "Invalid user",
-  //   });
-  // }
-  // const balance = await provider.getBalance(address);
-  // const balanceInEth = ethers.formatEther(balance);
-  // console.log("balance --> ", balance);
-  // console.log("balanceInEth --> ", balanceInEth);
-  // return res.status(200).json({
-  //   success: 1,
-  //   data: user,
-  // });
+  const { address } = req.body;
+
+  if (!ethers.isAddress(address)) {
+    return res.status(400).json({
+      success: 0,
+      data: "Invalid Address",
+    });
+  }
+
+  const userAccount = await userModel.findOne({
+    accounts: { $elemMatch: { address: address } },
+  });
+  const user = userAccount.accounts.find(
+    (account) => account.address === address
+  );
+
+  if (!user || !userAccount) {
+    return res.status(401).json({
+      success: 0,
+      data: "Invalid user",
+    });
+  }
+
+  const balance = await provider.getBalance(address);
+  const balanceInEth = ethers.formatEther(balance);
+  await userModel.updateOne(
+    {
+      _id: userAccount._id,
+      "accounts.address": user.address,
+    },
+    { $set: { "accounts.$.balance": balanceInEth } }
+  );
+  return res.status(200).json({
+    success: 1,
+    data: balanceInEth,
+  });
+};
+
+const sendTransaction = async (req, res) => {
+  const { fromAddress, toAddress, amount } = req.body;
+
+  const userAccounts = await userModel.findOne({
+    accounts: { $elemMatch: { address: fromAddress } },
+  });
+  const user = userAccounts.accounts.find(
+    (element) => element.address === fromAddress
+  );
+
+  if (!ethers.isAddress(fromAddress) || !ethers.isAddress(toAddress)) {
+    return res.status(401).json({
+      success: 0,
+      data: "Invalid Address",
+    });
+  }
+  if (!userAccounts || !user) {
+    return res.status(401).json({
+      success: 0,
+      data: "Invalid User",
+    });
+  }
+
+  let fromBalance = await provider.getBalance(fromAddress);
+  let formBalanceEther = ethers.formatEther(fromBalance);
+  let toBalance = await provider.getBalance(toAddress);
+  let toBalanceEther = ethers.formatEther(toBalance);
+
+  console.log(`Before From ${fromAddress} balance : ${formBalanceEther}`);
+  console.log(`Before To ${toAddress} balance : ${toBalanceEther}`);
+
+  console.log(user.balance, amount);
+  console.log(user.balance >= amount);
+  if (!(user.balance >= amount)) {
+    return res.status(400).json({
+      success: 0,
+      data: "Insufficiant Balance",
+    });
+  }
+
+  const signer = new ethers.Wallet(user.privateKey, provider);
+  console.log(signer);
+  const tx = await signer.sendTransaction({
+    to: toAddress,
+    value: ethers.parseEther(amount),
+  });
+
+  fromBalance = await provider.getBalance(fromAddress);
+  formBalanceEther = ethers.formatEther(fromBalance);
+  toBalance = await provider.getBalance(toAddress);
+  toBalanceEther = ethers.formatEther(toBalance);
+  console.log(`After From ${fromAddress} balance : ${formBalanceEther}`);
+  console.log(`After To ${toAddress} balance : ${toBalanceEther}`);
+
+  return res.status(200).json({
+    success: 1,
+    data: tx,
+  });
 };
 
 export default {
@@ -466,4 +538,5 @@ export default {
   importAccount,
   lockAndUnlockWallet,
   fetchUserBalance,
+  sendTransaction,
 };

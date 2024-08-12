@@ -6,11 +6,9 @@
 
 .createAccountContent_box {
   text-align: left;
-  margin-top: 60px;
-  border: 1px solid rgb(240, 240, 241);
   padding: 40px;
-  height: 650px;
-  width: 500px;
+  height: 600px;
+  width: 365px;
   border-radius: 15px;
 }
 

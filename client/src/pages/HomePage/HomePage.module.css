@@ -1,16 +1,15 @@
 .accounts_dropDown {
   display: flex;
-  align-items: baseline;
   justify-content: center;
-  gap: 10px;
+  gap: 7px;
   cursor: pointer;
 }
 
 .accounts_dropDown_icon_box {
   border-radius: 50%;
   background-color: var(--button-color);
-  height: 30px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,22 +25,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 80px;
 }
 
 .home_box {
-  border: 3px solid rgb(245, 245, 245);
   height: 600px;
-  width: 500px;
+  width: 365px;
   border-radius: 5px;
   overflow-y: auto;
 }
 
 .home_box h1 {
-  margin-top: 20px;
-}
-
-.home_box h5 {
   margin-top: 20px;
 }
 
@@ -112,7 +105,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 15px;
+  padding: 20px 0px 20px 5px;
   cursor: pointer;
 }
 
@@ -130,8 +123,8 @@
 .icon_box {
   border-radius: 50%;
   background-color: var(--button-color);
-  height: 40px;
-  width: 40px;
+  height: 35px;
+  width: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,7 +132,7 @@
 
 .icon_box .icon_txt {
   font-weight: 500;
-  font-size: 18px;
+  font-size: 14px;
   color: white;
 }
 
@@ -151,6 +144,7 @@
 
 .token_txt_box .toke_big_txt {
   font-weight: 600;
+  font-size: 15px;
 }
 
 .token_txt_box .toke_small_txt {
@@ -158,18 +152,20 @@
   color: var(--small-txt-color);
 }
 
-.token_icon_box .tokenPrice_box {
+.tokenPrice_box {
   display: flex;
   flex-direction: column;
   align-items: end;
+  width: 165px;
 }
 
 .tokenPrice_box .tokenPriceTxt {
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 12px;
 }
 
 .tokenPrice_box .tokenSmall_PriceTxt {
-  font-size: 15px;
+  font-size: 11px;
   color: var(--small-txt-color);
 }
 
@@ -178,4 +174,111 @@
   flex-direction: row;
   gap: 15px;
   align-items: center;
+}
+
+.account_dropShadowBox {
+  box-shadow: 0 2px 16px 0 #0000001a;
+}
+
+.account_dropMainBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-top: 15px;
+}
+
+.verIcon {
+  font-size: 19px;
+  cursor: pointer;
+  right: 10px;
+  position: absolute;
+}
+
+.dialogMain .MuiDialog-container .MuiPaper-root {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+.passphrase_box .findAccountCBtn {
+  border: none;
+  color: white;
+  background-color: var(--button-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+  text-decoration: none;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.copyBtn {
+  border: 1px solid var(--button-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  font-weight: 500;
+  border-radius: 50px;
+  width: 100%;
+  text-decoration: none;
+  margin-top: 20px;
+  background-color: transparent;
+  color: var(--button-color);
+  gap: 8px;
+}
+
+.dialogTitle {
+  font-size: 15px;
+  color: var(--small-txt-color);
+}
+
+.passphrase_box .secure_box {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  gap: 15px;
+  border-radius: 5px;
+  height: 60px;
+  margin-bottom: 10px;
+  border: 1px solid rgb(143, 205, 255);
+  background-color: rgb(240, 249, 255);
+}
+
+.secure_box_accountNum_txt {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.secure_box .secure_box_copy_icon {
+  font-size: 25px;
+  cursor: pointer;
+  color: var(--button-color);
+}
+
+.address_AccountBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: 5px;
+}
+
+.address_AccountBox_Txt {
+  color: var(--small-txt-color);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.address_AccountBox_copyIcon {
+  font-weight: bold;
+  color: var(--small-txt-color);
+  cursor: pointer;
 }

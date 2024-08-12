@@ -2,13 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 80px;
 }
 
 .receiveToken_box {
-  border: 3px solid rgb(245, 245, 245);
   height: 600px;
-  width: 500px;
+  width: 365px;
   border-radius: 5px;
   overflow-y: auto;
   padding: 15px;
@@ -35,6 +33,7 @@
 }
 
 .accountAddress_box {
+  word-break: break-word;
   background-color: rgb(214, 237, 255);
   padding: 15px;
   color: rgb(0, 84, 151);
@@ -42,14 +41,15 @@
   font-size: 16px;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   justify-content: space-between;
   border-radius: 10px;
-  margin-top: 25px;
+  margin-top: 20px;
+  gap: 10px;
 }
 
 .accountAddress_box .copyIcon {
   cursor: pointer;
+  font-size: 20px;
 }
 
 .showKeyBtn {
@@ -113,13 +113,15 @@
   font-size: 16px;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  word-break: break-word;
   justify-content: space-between;
   border-radius: 10px;
+  gap: 10px;
 }
 
 .dialog_accountAddress_box .copyIcon {
   cursor: pointer;
+  font-size: 30px;
 }
 
 .password_box label {
@@ -183,7 +185,7 @@
 }
 
 .private_key_txt_box .copyIcon {
-  font-size: 20px;
+  font-size: 40px;
   cursor: pointer;
 }
 
@@ -191,4 +193,11 @@
   height: auto;
   max-width: 50%;
   margin: 20px 0px;
+}
+
+.back_icon {
+  display: flex;
+  text-align: left;
+  font-size: 20px;
+  cursor: pointer;
 }

@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import AlertComponent from "../../AlertComponent/AlertComponent";
 import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import axios from "axios";
+import logo from "../../../assets/logo1.avif";
+import { MdOutlineArrowBackIos } from "react-icons/md";
 
 const RecoverSeedPhrase = (props) => {
   const navigate = useNavigate();
@@ -26,6 +28,10 @@ const RecoverSeedPhrase = (props) => {
 
   const handleSeedPhrase = (e) => {
     setPrivateKey(e.target.value);
+  };
+
+  const handleGoBack = () => {
+    navigate(-1);
   };
 
   const checkDataDisabled = () => {
@@ -85,6 +91,12 @@ const RecoverSeedPhrase = (props) => {
     <>
       <div className={Style.recoverSeedPhrase}>
         <div className={Style.recoverSeedPhrase_box}>
+          <div className={Style.back_icon} onClick={handleGoBack}>
+            <MdOutlineArrowBackIos />
+          </div>
+          <center>
+            <img src={logo} alt="logo" height={180} width={180} />
+          </center>
           <h2>Recover using Private Key</h2>
           <p>Enter the private key associated with the account.</p>
 
@@ -114,7 +126,7 @@ const RecoverSeedPhrase = (props) => {
           </button>
           {/* </Link> */}
 
-          <div className={Style.recoverSeedPhrase_box_find_accountTxt}>
+          {/* <div className={Style.recoverSeedPhrase_box_find_accountTxt}>
             <div className={Style.cantAccountText}>
               Can't find your account?
             </div>
@@ -123,7 +135,7 @@ const RecoverSeedPhrase = (props) => {
                 Import it manually.
               </Link>
             </div>
-          </div>
+          </div> */}
         </div>
         {showAlert.isDisplay && (
           <AlertComponent type={showAlert.type} message={showAlert.message} />

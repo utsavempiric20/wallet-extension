@@ -3,6 +3,8 @@ import Style from "./CreateAccount.module.css";
 import AlertComponent from "../../AlertComponent/AlertComponent";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { MdOutlineArrowBackIos } from "react-icons/md";
+import logo from "../../../assets/logo1.avif";
 
 const CreateAccount = (props) => {
   const navigate = useNavigate();
@@ -14,8 +16,13 @@ const CreateAccount = (props) => {
     type: "",
     isDisplay: false,
   });
+
   const handleAccountName = (e) => {
     setAccountName(e.target.value);
+  };
+
+  const handleGoBack = () => {
+    navigate(-1);
   };
 
   const addAccountName = (event) => {
@@ -61,6 +68,12 @@ const CreateAccount = (props) => {
   return (
     <div className={Style.createAccount}>
       <div className={Style.createAccount_box}>
+        <div className={Style.back_icon} onClick={handleGoBack}>
+          <MdOutlineArrowBackIos />
+        </div>
+        <center>
+          <img src={logo} alt="logo" height={180} width={180} />
+        </center>
         <h2>Add a Account Name</h2>
         <p>
           Enter an Account Name to use with your BLUESKY account. Your Account

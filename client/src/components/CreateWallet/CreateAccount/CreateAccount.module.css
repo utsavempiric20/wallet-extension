@@ -6,19 +6,15 @@
 
 .createAccount_box {
   text-align: left;
-  margin-top: 50px;
-  border: 1px solid rgb(240, 240, 241);
   padding: 40px;
-  height: 400px;
-  width: 500px;
+  height: 600px;
+  width: 365px;
   border-radius: 15px;
 }
 
 .createAccount p {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  font-size: 14px;
   color: var(--small-txt-color);
-  width: 95%;
 }
 
 .createAccount_box h2 {
@@ -49,4 +45,11 @@
 
 .createAccount_box .nextBtn:disabled {
   opacity: 50%;
+}
+
+.back_icon {
+  display: flex;
+  text-align: left;
+  font-size: 20px;
+  cursor: pointer;
 }

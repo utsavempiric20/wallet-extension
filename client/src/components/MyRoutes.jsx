@@ -44,11 +44,11 @@ const MyRoutes = (props) => {
 
   return (
     <div>
-      <Navbar
+      {/* <Navbar
         userDetails={userDetails}
         selectedAccount={selectedAccount}
         setSelectedAccount={setSelectedAccount}
-      />
+      /> */}
       <Routes>
         <Route path="/" element={<CreateAccountMain />} />
 
@@ -106,6 +106,7 @@ const MyRoutes = (props) => {
               userDetails={userDetails}
               selectedAccount={selectedAccount}
               setSelectedAccount={setSelectedAccount}
+              setManageuser={setManageuser}
             />
           }
         />

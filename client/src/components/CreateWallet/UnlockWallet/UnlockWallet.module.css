@@ -6,11 +6,9 @@
 
 .unlockWallet_Box {
   text-align: left;
-  margin-top: 50px;
-  border: 1px solid rgb(240, 240, 241);
   padding: 40px;
-  height: 380px;
-  width: 500px;
+  height: 600px;
+  width: 365px;
   border-radius: 15px;
 }
 
@@ -50,7 +48,6 @@
 }
 
 .unlockWallet_Box button {
-  margin-top: 50px;
   border: none;
   color: white;
   background-color: var(--button-color);
@@ -61,6 +58,7 @@
   font-weight: 500;
   border-radius: 50px;
   width: 100%;
+  margin-top: 30px;
 }
 
 .unlockWallet_Box button:disabled {

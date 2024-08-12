@@ -1,11 +1,15 @@
 import React from "react";
 import Style from "./CreateAccountMain.module.css";
 import { Link } from "react-router-dom";
+import logo from "../../assets/logo1.avif";
 
 const CreateAccountMain = () => {
   return (
     <div className={Style.createAccountMain}>
       <div className={Style.createAccountMainBox}>
+        <div>
+          <img src={logo} alt="logo" height={180} width={180} />
+        </div>
         <h2>BLUESKY is here.</h2>
         <p>
           Securely store and stake your BLUESKY tokens and compatible assets

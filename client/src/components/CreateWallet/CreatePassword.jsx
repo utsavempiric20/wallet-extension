@@ -12,7 +12,6 @@ const CreatePassword = (props) => {
     password: "",
     confirmPassword: "",
     firstCheck: false,
-    secondCheck: false,
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -39,8 +38,7 @@ const CreatePassword = (props) => {
       passwordInfo.confirmPassword === "" ||
       passwordInfo.password.length < 8 ||
       passwordInfo.confirmPassword.length < 8 ||
-      !passwordInfo.firstCheck ||
-      !passwordInfo.secondCheck
+      !passwordInfo.firstCheck
     ) {
       setIsDisabled(true);
     } else {
@@ -144,18 +142,6 @@ const CreatePassword = (props) => {
             I acknowledge that this password can not be used to recover my
             accounts, I still need to preserve the recovery methods used when
             first creating my accounts (seed phrase etc.)
-          </p>
-        </div>
-        <div className={Style.firstCheckBox}>
-          <input
-            type="checkbox"
-            name="secondCheck"
-            checked={passwordInfo.secondCheck}
-            onChange={handlePassword}
-          />
-          <p>
-            I acknowledge that storing this password in my browser's password
-            manager exposes me to additional risk (we recommend you do not).
           </p>
         </div>
 

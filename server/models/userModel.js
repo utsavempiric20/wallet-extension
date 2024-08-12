@@ -16,7 +16,7 @@ const usersSchema = new mongoose.Schema({
       address: String,
       publicKey: String,
       privateKey: String,
-      balance: Number,
+      balance: String,
       isImported: { type: Number, default: 0 }, // 0 : unImported , 1 : imported
     },
   ],

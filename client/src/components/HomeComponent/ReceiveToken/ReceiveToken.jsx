@@ -7,17 +7,24 @@ import AlertComponent from "../../AlertComponent/AlertComponent";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import QRCode from "react-qr-code";
+import { MdOutlineArrowBackIos } from "react-icons/md";
 
 const ReceiveToken = (props) => {
   const { userDetails, selectedAccount } = props;
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = (num) => {
+    setOpen(true);
+    setIsSeedOrKey(num);
+    console.log(num);
+  };
   const handleClose = () => setOpen(false);
 
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
+
+  const [isSeedOrKey, setIsSeedOrKey] = useState(0);
 
   const [showPrivateKey, setShowPrivateKey] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -34,6 +41,10 @@ const ReceiveToken = (props) => {
     isDisplay: false,
   });
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   const handlePassword = (e) => {
     const { name, value } = e.target;
     setPasswordInfo({
@@ -42,14 +53,14 @@ const ReceiveToken = (props) => {
     });
   };
 
-  const handleDialog1 = (event) => {
-    event.preventDefault();
+  const handleDialog1 = (isSeedOrKey) => {
+    // event.preventDefault();
     const userData = {
       userId: userDetails.userId,
       accountAddress: selectedAccount.address,
       password: passwordInfo.password,
       confirm_password: passwordInfo.confirm_password,
-      isSecretSeedInfo: 0,
+      isSecretSeedInfo: isSeedOrKey,
     };
     axios
       .post(
@@ -116,6 +127,9 @@ const ReceiveToken = (props) => {
     <>
       <div className={Style.receiveToken}>
         <div className={Style.receiveToken_box}>
+          <div className={Style.back_icon} onClick={handleGoBack}>
+            <MdOutlineArrowBackIos />
+          </div>
           <center>
             <div className={Style.account_icon_box}>
               <div className={Style.account_icon_txt}>
@@ -142,8 +156,11 @@ const ReceiveToken = (props) => {
               }}
             />
           </div>
-          <button className={Style.showKeyBtn} onClick={handleOpen}>
+          <button className={Style.showKeyBtn} onClick={() => handleOpen(0)}>
             Show private key
+          </button>
+          <button className={Style.showKeyBtn} onClick={() => handleOpen(1)}>
+            Reveal Seed Phrase
           </button>
         </div>
       </div>
@@ -160,7 +177,7 @@ const ReceiveToken = (props) => {
         }}
       >
         <DialogTitle className={Style.dialogTitle}>
-          Show Private Key
+          {isSeedOrKey == 0 ? "Show Private Key" : "Reveal Seed Phrase"}
         </DialogTitle>
         <DialogContent>
           <center>
@@ -209,7 +226,7 @@ const ReceiveToken = (props) => {
             <div className="mb-3">
               <label htmlFor="accountName_input">Confirm password</label>
               <input
-                type={showPassword ? "text" : "password"}
+                type={showConfirmPassword ? "text" : "password"}
                 className="form-control"
                 name="confirm_password"
                 minLength="8"
@@ -241,7 +258,7 @@ const ReceiveToken = (props) => {
             <button
               className={Style.nextBtn}
               type="submit"
-              onClick={handleDialog1}
+              onClick={() => handleDialog1(isSeedOrKey)}
               disabled={isDisabled}
             >
               Confirm
@@ -262,7 +279,7 @@ const ReceiveToken = (props) => {
         }}
       >
         <DialogTitle className={Style.dialogTitle}>
-          Show Private Key
+          {isSeedOrKey == 0 ? "Show Private Key" : "Reveal Seed Phrase"}
         </DialogTitle>
         <DialogContent>
           <center>
@@ -287,7 +304,7 @@ const ReceiveToken = (props) => {
           </center>
 
           <div className={Style.dialog_private_key_title}>
-            Private key for Account 1
+            {isSeedOrKey == 0 ? "Private key for Account 1" : "Seed Phrase"}
           </div>
           <div className={Style.private_key_txt_box}>
             <div className={Style.private_key_txt}>{showPrivateKey}</div>

@@ -16,12 +16,20 @@ import {
 } from "@mui/material";
 import TokensTab from "../../components/HomeComponent/HomeTabs/TokensTab/TokensTab";
 import ActivityTab from "../../components/HomeComponent/HomeTabs/ActivityTab/ActivityTab";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaChevronDown } from "react-icons/fa";
+import { MdMoreVert } from "react-icons/md";
+import { FaPlus } from "react-icons/fa6";
+import { TfiImport } from "react-icons/tfi";
+import { FiCopy } from "react-icons/fi";
+import { IoIosLock } from "react-icons/io";
+import { IoCopy } from "react-icons/io5";
 
 const HomeComponent = (props) => {
-  const { userDetails, selectedAccount, setSelectedAccount } = props;
+  const { userDetails, selectedAccount, setSelectedAccount, setManageuser } =
+    props;
+  const navigate = useNavigate();
   const iconsArray = [
     {
       icon: <BsSend className={Style.sendIcon} />,
@@ -39,7 +47,6 @@ const HomeComponent = (props) => {
       path: "/swap-tokens",
     },
   ];
-
   const [value, setValue] = useState("1");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -88,6 +95,14 @@ const HomeComponent = (props) => {
     // },
   ]);
   const [loading, setLoading] = useState(false);
+  const [open2, setOpen2] = useState(false);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
+  const [showAlert, setShowAlert] = useState({
+    message: "",
+    type: "",
+    isDisplay: false,
+  });
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -113,6 +128,17 @@ const HomeComponent = (props) => {
     setValue(newValue);
   };
 
+  const handleSelectedAccount = (item) => {
+    localStorage.setItem("userAccount", JSON.stringify(item));
+    const accountData = JSON.parse(localStorage.getItem("userAccount"));
+    if (accountData) {
+      setSelectedAccount(accountData);
+      fetchBalance();
+    }
+    setManageuser(true);
+    handleClose();
+  };
+
   const getAllAccounts = () => {
     setLoading(true);
     axios
@@ -126,6 +152,7 @@ const HomeComponent = (props) => {
         } else {
           setSelectedAccount(res.data.data[0]);
         }
+        fetchBalance();
         localStorage.setItem("userAccount", JSON.stringify(res.data.data[0]));
       })
       .catch((err) => {
@@ -134,18 +161,84 @@ const HomeComponent = (props) => {
     setLoading(false);
   };
 
+  const fetchBalance = () => {
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/wallet/fetchUserBalance`, {
+        address: selectedAccount.address,
+      })
+      .then((res) => {
+        localStorage.setItem(
+          "userAccount",
+          JSON.stringify({ ...selectedAccount, balance: res.data.data })
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setManageuser(true);
+  };
+
+  const handleImportAccount = () => {
+    // navigate("/recover-account");
+    navigate("/recover-seed-phrase");
+    handleClose();
+  };
+
+  const handelCreateAccount = () => {
+    navigate("/create-account");
+    handleClose();
+  };
+
+  const handleAlert = (message, type, isDisplay) => {
+    setShowAlert({ message, type, isDisplay });
+    setTimeout(() => {
+      setShowAlert({ message: "", type: "", isDisplay: false });
+    }, 4000);
+    clearTimeout();
+  };
+
+  const handleLockWallet = () => {
+    const userData = {
+      userId: userDetails.userId,
+    };
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/wallet/lockAndUnlockWallet`,
+        userData
+      )
+      .then((res) => {
+        if (res.data.success === 1) {
+          navigate("/unlock-wallet", { replace: true });
+          const seedData = JSON.parse(localStorage.getItem("userData"));
+          if (seedData) {
+            const updatedData = { ...seedData, isWalletLock: 1 };
+            localStorage.setItem("userData", JSON.stringify(updatedData));
+            setSelectedAccount(null);
+          }
+          handleClose();
+        }
+      })
+      .catch((error) => {
+        handleAlert(error.response.data.data, "error", true);
+        console.log(error);
+      });
+  };
+
+  const truncateAddress = (address) => {
+    if (address.length <= 10) return address;
+
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
+
+  const truncateAddress2 = (address) => {
+    if (address.length <= 10) return address;
+
+    return `${address.slice(0, 10)}...${address.slice(-10)}`;
+  };
+
   useEffect(() => {
     getAllAccounts();
   }, []);
-
-  const handleSelectedAccount = (item) => {
-    localStorage.setItem("userAccount", JSON.stringify(item));
-    const accountData = JSON.parse(localStorage.getItem("userAccount"));
-    if (accountData) {
-      setSelectedAccount(accountData);
-    }
-    handleClose();
-  };
 
   return (
     <>
@@ -154,15 +247,36 @@ const HomeComponent = (props) => {
       ) : (
         <div className={Style.homeMainDiv}>
           <div className={Style.home_box}>
-            <div className={Style.accounts_dropDown} onClick={handleOpen}>
-              <div className={Style.accounts_dropDown_icon_box}>
-                <div className={Style.icon_txt}>
-                  {selectedAccount &&
-                    accountAvatarName(selectedAccount.accountName)}
+            <div className={Style.account_dropShadowBox}>
+              <div className={Style.account_dropMainBox}>
+                <div className={Style.accounts_dropDown} onClick={handleOpen}>
+                  <div className={Style.accounts_dropDown_icon_box}>
+                    <div className={Style.icon_txt}>
+                      {selectedAccount &&
+                        accountAvatarName(selectedAccount.accountName)}
+                    </div>
+                  </div>
+                  <h5>{selectedAccount && selectedAccount.accountName}</h5>
+                  <div className={Style.down_iconBox}>
+                    <FaChevronDown />
+                  </div>
+                </div>
+
+                <div className={Style.verIcon} onClick={handleOpen2}>
+                  <MdMoreVert />
                 </div>
               </div>
-              <h5>{selectedAccount && selectedAccount.accountName}</h5>
-              <FaChevronDown />
+              <div className={Style.address_AccountBox}>
+                <div className={Style.address_AccountBox_Txt}>
+                  {truncateAddress(selectedAccount.address)}
+                </div>
+                <IoCopy
+                  className={Style.address_AccountBox_copyIcon}
+                  onClick={() => {
+                    navigator.clipboard.writeText(selectedAccount.address);
+                  }}
+                />
+              </div>
             </div>
 
             <h1>{selectedAccount && selectedAccount.balance} SepoliaEth</h1>
@@ -257,7 +371,7 @@ const HomeComponent = (props) => {
                       </div>
                     </div>
                     <div className={Style.yourAccountTxt}>Your Accounts</div>
-                    {filterItems.map((element, i) => (
+                    {filterItems?.map((element, i) => (
                       <div
                         className={Style.accounts_list_box}
                         key={i}
@@ -274,7 +388,7 @@ const HomeComponent = (props) => {
                               {element.accountName}
                             </div>
                             <div className={Style.toke_small_txt}>
-                              {element.address}
+                              {truncateAddress(element.address)}
                             </div>
                           </div>
                         </div>
@@ -291,6 +405,70 @@ const HomeComponent = (props) => {
                     ))}
                   </div>
                 </div>
+              </DialogContent>
+            </Dialog>
+
+            <Dialog
+              open={open2}
+              onClose={handleClose2}
+              sx={{
+                "& .MuiBackdrop-root": {
+                  backgroundColor: "transparent",
+                },
+                " & .MuiDialog-container": {
+                  "& .MuiPaper-root": {
+                    position: "absolute",
+                    top: "0",
+                    right: "0px",
+                    width: "320px",
+                    height: "380px",
+                  },
+                },
+              }}
+              className={Style.dialogMain}
+            >
+              <DialogTitle className={Style.dialogTitle}>
+                {selectedAccount && selectedAccount.accountName}
+              </DialogTitle>
+              <DialogContent>
+                <Box className={Style.passphrase_box}>
+                  <div className={Style.secure_box}>
+                    <div className={Style.secure_box_accountNum_txt}>
+                      {selectedAccount &&
+                        truncateAddress2(selectedAccount.address)}
+                    </div>
+
+                    <FiCopy
+                      className={Style.secure_box_copy_icon}
+                      onClick={() =>
+                        navigator.clipboard.writeText(selectedAccount.address)
+                      }
+                    />
+                  </div>
+
+                  <button
+                    className={Style.findAccountCBtn}
+                    onClick={handleImportAccount}
+                  >
+                    <TfiImport />
+                    Import Account
+                  </button>
+
+                  <button
+                    className={Style.copyBtn}
+                    onClick={handelCreateAccount}
+                  >
+                    <FaPlus className={Style.copyIcon} /> Create New Account
+                  </button>
+                  <button
+                    className={Style.findAccountCBtn}
+                    onClick={handleLockWallet}
+                  >
+                    <IoIosLock />
+                    Lock Wallet
+                  </button>
+                </Box>
+                <Box className={Style.bottomBtnComponent}></Box>
               </DialogContent>
             </Dialog>
           </div>

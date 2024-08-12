@@ -3,6 +3,7 @@ import Style from "./FindAccounts.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
+import { MdOutlineArrowBackIos } from "react-icons/md";
 
 const FindAccounts = (props) => {
   const { userDetails } = props;
@@ -15,6 +16,10 @@ const FindAccounts = (props) => {
     setSearch(e.target.value);
   };
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   const accountAvatarName = (name) => {
     const singleChar = name.charAt(0);
     for (let i = 0; i < name.length; i++) {
@@ -24,6 +29,12 @@ const FindAccounts = (props) => {
       }
     }
     return null;
+  };
+
+  const truncateAddress = (address) => {
+    if (address.length <= 10) return address;
+
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
   const filterItems = accountData.filter((item) =>
@@ -56,7 +67,13 @@ const FindAccounts = (props) => {
       ) : (
         <div className={Style.findAccount}>
           <div className={Style.findAccounts_box}>
-            <h3>Send to</h3>
+            <div className={Style.leftIconBox}>
+              <div className={Style.back_icon} onClick={handleGoBack}>
+                <MdOutlineArrowBackIos />
+              </div>
+              <h3>Send to</h3>
+            </div>
+
             <div className={Style.search_box_seed}>
               <div className="mb-3">
                 <input
@@ -79,17 +96,28 @@ const FindAccounts = (props) => {
                 onClick={() => navigate("/send-token")}
               >
                 <div className={Style.token_icon_box}>
-                  <div className={Style.icon_box}>
-                    <div className={Style.icon_txt}>
-                      {accountAvatarName(element.accountName)}
+                  <div className={Style.token_icon_mini_box}>
+                    <div className={Style.icon_box}>
+                      <div className={Style.icon_txt}>
+                        {accountAvatarName(element.accountName)}
+                      </div>
+                    </div>
+                    <div className={Style.token_txt_box}>
+                      <div className={Style.toke_big_txt}>
+                        {element.accountName}
+                      </div>
+                      <div className={Style.toke_small_txt}>
+                        {truncateAddress(element.address)}
+                      </div>
                     </div>
                   </div>
-                  <div className={Style.token_txt_box}>
-                    <div className={Style.toke_big_txt}>
-                      {element.accountName}
+
+                  <div className={Style.tokenPrice_box}>
+                    <div className={Style.tokenPriceTxt}>
+                      {element.balance} SepoliaEth
                     </div>
-                    <div className={Style.toke_small_txt}>
-                      {element.address}
+                    <div className={Style.tokenSmall_PriceTxt}>
+                      {element.balance} SepoliaEth
                     </div>
                   </div>
                 </div>

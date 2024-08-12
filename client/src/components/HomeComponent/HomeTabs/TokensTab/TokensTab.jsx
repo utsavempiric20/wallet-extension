@@ -91,7 +91,7 @@ const TokensTab = () => {
         sx={{
           "& .MuiDialog-container": {
             "& .MuiPaper-root": {
-              width: "27%",
+              // width: "27%",
             },
           },
         }}

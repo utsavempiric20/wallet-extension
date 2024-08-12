@@ -70,23 +70,29 @@ const SetupPassPhrase = (props) => {
               </div>
 
               <div className={Style.mainSeed_box_border}></div>
-
-              <button className={Style.copyBtn} onClick={handleCopy}>
+              <Link
+                to="/verify-phrase"
+                replace
+                className={Style.continueBtnTxt}
+              >
+                <button onClick={handleCopy}>Copy & Continue</button>
+              </Link>
+              {/* <button className={Style.copyBtn} onClick={handleCopy}>
                 <FiCopy className={Style.copyIcon} /> Copy
-              </button>
+              </button> */}
             </div>
 
-            <Link to="/verify-phrase" replace className={Style.continueBtnTxt}>
+            {/* <Link to="/verify-phrase" replace className={Style.continueBtnTxt}>
               <button>Continue</button>
-            </Link>
+            </Link> */}
 
-            <Link
+            {/* <Link
               to="/setup-passphrase-new-account"
               replace
               className={Style.cancelBtnTxt}
             >
               <div className={Style.cancelBtn}>Cancel</div>
-            </Link>
+            </Link> */}
           </div>
           {showAlert && (
             <AlertComponent type="success" message="seed copy successfully" />

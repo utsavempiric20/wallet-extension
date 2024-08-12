@@ -4,6 +4,7 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import AlertComponent from "../../AlertComponent/AlertComponent";
 import axios from "axios";
+import logo from "../../../assets/logo1.avif";
 
 const UnlockWallet = (props) => {
   const { userDetails, setUserDetails } = props;
@@ -71,6 +72,10 @@ const UnlockWallet = (props) => {
   return (
     <div className={Style.unlockWallet}>
       <div className={Style.unlockWallet_Box}>
+        <center>
+          <img src={logo} alt="logo" height={180} width={180} />
+        </center>
+
         <h2>Unlock Wallet</h2>
         <p>
           Welcome back, the web3 world awaits you. Enter your password to unlock

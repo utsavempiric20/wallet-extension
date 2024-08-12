@@ -2,13 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 80px;
 }
 
 .findAccounts_box {
-  border: 3px solid rgb(245, 245, 245);
   height: 600px;
-  width: 500px;
+  width: 365px;
   border-radius: 5px;
   overflow-y: auto;
 }
@@ -87,4 +85,41 @@
 .token_txt_box .toke_small_txt {
   font-size: 15px;
   color: var(--small-txt-color);
+}
+
+.tokenPrice_box {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  width: 165px;
+}
+
+.token_icon_mini_box {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.tokenPrice_box .tokenPriceTxt {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.tokenPrice_box .tokenSmall_PriceTxt {
+  font-size: 12px;
+  color: var(--small-txt-color);
+}
+
+.back_icon {
+  left: 20px;
+  position: absolute;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.leftIconBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }

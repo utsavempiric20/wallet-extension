@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import Style from "./SendToken.module.css";
 import { useNavigate } from "react-router-dom";
+import { MdOutlineArrowBackIos } from "react-icons/md";
 
 const SendToken = () => {
   const navigate = useNavigate();
   const [amount, setAmount] = useState(0);
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
@@ -12,7 +17,13 @@ const SendToken = () => {
   return (
     <div className={Style.senToken}>
       <div className={Style.senToken_box}>
-        <h3>Send</h3>
+        <div className={Style.leftIconBox}>
+          <div className={Style.back_icon} onClick={handleGoBack}>
+            <MdOutlineArrowBackIos />
+          </div>
+          <h3>Send</h3>
+        </div>
+
         <div className={Style.accountName_box}>
           <div className={Style.accountNameTxt}>Account 1</div>
           <div className={Style.accountAddress_txt}>

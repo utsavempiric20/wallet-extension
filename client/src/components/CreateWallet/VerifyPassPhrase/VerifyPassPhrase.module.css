@@ -6,11 +6,9 @@
 
 .verifyPassPhrase_box {
   text-align: left;
-  margin-top: 50px;
-  border: 1px solid rgb(240, 240, 241);
   padding: 40px;
   height: 600px;
-  width: 500px;
+  width: 365px;
   border-radius: 15px;
 }
 
