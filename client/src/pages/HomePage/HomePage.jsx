@@ -24,7 +24,7 @@ import { FaPlus } from "react-icons/fa6";
 import { TfiImport } from "react-icons/tfi";
 import { FiCopy } from "react-icons/fi";
 import { IoIosLock } from "react-icons/io";
-import AlertComponent from "../../components/AlertComponent/AlertComponent";
+import { IoCopy } from "react-icons/io5";
 
 const HomeComponent = (props) => {
   const { userDetails, selectedAccount, setSelectedAccount, setManageuser } =
@@ -133,7 +133,6 @@ const HomeComponent = (props) => {
     const accountData = JSON.parse(localStorage.getItem("userAccount"));
     if (accountData) {
       setSelectedAccount(accountData);
-      fetchBalance();
     }
     handleClose();
   };
@@ -471,9 +470,6 @@ const HomeComponent = (props) => {
               </DialogContent>
             </Dialog>
           </div>
-          {showAlert.isDisplay && (
-            <AlertComponent type={showAlert.type} message={showAlert.message} />
-          )}
         </div>
       )}
     </>

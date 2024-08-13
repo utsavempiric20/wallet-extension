@@ -441,7 +441,7 @@ const fetchUserBalance = async (req, res) => {
   const userAccount = await userModel.findOne({
     accounts: { $elemMatch: { address: address } },
   });
-  const user = userAccount.accounts.find(
+  const user = userAccount?.accounts.find(
     (account) => account.address === address
   );
 
