@@ -56,7 +56,6 @@ const CreatePassword = (props) => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/wallet/createWallet`, userData)
       .then((res) => {
-        console.log(res);
         if (res.status == 200) {
           const userData = {
             seed: res.data.data.seed,

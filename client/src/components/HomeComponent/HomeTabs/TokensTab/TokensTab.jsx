@@ -47,7 +47,6 @@ const TokensTab = () => {
 
   const addTokenAddress = (event) => {
     event.preventDefault();
-    console.log(tokenData);
     handleClose();
     handleOpen2();
   };

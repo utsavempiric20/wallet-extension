@@ -36,7 +36,6 @@ const SetupPassPhrase = (props) => {
   };
 
   useEffect(() => {
-    console.log("userDetails setupPass", userDetails);
     getSeedData();
   }, [userDetails]);
 

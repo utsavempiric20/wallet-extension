@@ -34,7 +34,6 @@ const CreateAccount = (props) => {
         { accountName }
       )
       .then((res) => {
-        console.log(res);
         if (res.data.success === 1) {
           navigate("/home", { replace: true });
           setAccountName("");

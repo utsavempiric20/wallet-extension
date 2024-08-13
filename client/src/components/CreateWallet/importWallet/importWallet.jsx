@@ -82,7 +82,6 @@ const ImportWallet = (props) => {
             setManageuser(true);
             navigate("/unlock-wallet", { replace: true });
           }
-          console.log("res", res);
         })
         .catch((error) => {
           handleAlert(error.response.data.data, "error", true);

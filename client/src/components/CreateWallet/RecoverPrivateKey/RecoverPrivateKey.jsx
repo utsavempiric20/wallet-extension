@@ -59,7 +59,6 @@ const RecoverSeedPhrase = (props) => {
 
   const addManualImportAccount = (event) => {
     event.preventDefault();
-    console.log(manualImportData);
   };
 
   const addPrivateKey = (event) => {
@@ -71,7 +70,6 @@ const RecoverSeedPhrase = (props) => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/wallet/importAccount`, userData)
       .then((res) => {
-        console.log(res);
         if (res.data.success === 1) {
           navigate("/home", { replace: true });
           setPrivateKey("");

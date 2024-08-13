@@ -67,7 +67,6 @@ const ForgotPassword = () => {
           navigate("/unlock-wallet", { replace: true });
           handleAlert(res.data.data, "success", true);
         }
-        console.log("res", res);
       })
       .catch((error) => {
         handleAlert(error.response.data.data, "error", true);

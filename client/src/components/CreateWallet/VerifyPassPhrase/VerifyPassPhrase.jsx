@@ -78,7 +78,6 @@ const VerifyPassPhrase = (props) => {
           if (res.status === 200 && res.data.success === 1) {
             navigate("/unlock-wallet", { replace: true });
           }
-          console.log("res", res);
         })
         .catch((error) => {
           handleAlert(error.response.data.data, "error", true);

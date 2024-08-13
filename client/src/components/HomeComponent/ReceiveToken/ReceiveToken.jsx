@@ -16,7 +16,6 @@ const ReceiveToken = (props) => {
   const handleOpen = (num) => {
     setOpen(true);
     setIsSeedOrKey(num);
-    console.log(num);
   };
   const handleClose = () => setOpen(false);
 
@@ -68,7 +67,6 @@ const ReceiveToken = (props) => {
         userData
       )
       .then((res) => {
-        console.log(res);
         if (res.status == 200) {
           setShowPrivateKey(res.data.data);
           handleClose();
@@ -79,7 +77,6 @@ const ReceiveToken = (props) => {
       .catch((error) => {
         handleAlert(error.response.data.data, "error", true);
         console.log(error);
-        console.log(error.response.data.data);
       });
   };
 

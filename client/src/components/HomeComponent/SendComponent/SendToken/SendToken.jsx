@@ -42,7 +42,7 @@ const SendToken = (props) => {
       toAddress: address,
       amount: amount,
     };
-    console.log("sendData : ", sendData);
+
     axios
       .post(`${process.env.REACT_APP_API_URL}/wallet/sendTransaction`, sendData)
       .then((res) => {
