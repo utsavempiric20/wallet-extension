@@ -41,11 +41,11 @@ const HomeComponent = (props) => {
       iconTxt: "Receive",
       path: "/receive-token",
     },
-    {
-      icon: <IoMdSwap className={Style.sendIcon} />,
-      iconTxt: "Swap",
-      path: "/swap-tokens",
-    },
+    // {
+    //   icon: <IoMdSwap className={Style.sendIcon} />,
+    //   iconTxt: "Swap",
+    //   path: "/swap-tokens",
+    // },
   ];
   const [value, setValue] = useState("1");
   const [open, setOpen] = useState(false);
