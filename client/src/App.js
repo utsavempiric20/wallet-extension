@@ -38,6 +38,7 @@ function App() {
     getUserDetails();
     getAccountDetails();
     setLoading(false);
+    setManageuser(false);
   }, [manageUser]);
 
   return (

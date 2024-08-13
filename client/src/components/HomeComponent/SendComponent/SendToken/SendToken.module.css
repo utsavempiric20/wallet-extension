@@ -11,11 +11,12 @@
   border-radius: 5px;
   overflow-y: auto;
   padding: 15px;
+  position: relative;
 }
 
 .accountName_box {
   margin-top: 20px;
-  border: 1px solid var(--button-color);
+  border: 1px solid #d6d9dc;
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 20px;
@@ -158,4 +159,19 @@
   display: flex;
   justify-content: center;
   position: relative;
+}
+
+.contentDisabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.loader {
+  position: absolute;
+  height: 600px;
+  width: 365px;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

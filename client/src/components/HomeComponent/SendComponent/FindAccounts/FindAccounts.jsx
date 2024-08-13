@@ -38,7 +38,7 @@ const FindAccounts = (props) => {
   };
 
   const filterItems = accountData.filter((item) =>
-    item.accountName.toLowerCase().includes(search.toLowerCase())
+    item.address.includes(search)
   );
 
   const getAllAccounts = () => {
@@ -54,6 +54,14 @@ const FindAccounts = (props) => {
         console.log(err);
       });
     setLoading(false);
+  };
+
+  const handleSelectedItem = (adddress, event = null) => {
+    if (event && event.key === "Enter") {
+      navigate(`/send-token/${adddress}`);
+    } else if (!event) {
+      navigate(`/send-token/${adddress}`);
+    }
   };
 
   useEffect(() => {
@@ -85,6 +93,7 @@ const FindAccounts = (props) => {
                   placeholder="Enter public address(0x)"
                   value={search}
                   onChange={handleSearch}
+                  onKeyDown={(event) => handleSelectedItem(search, event)}
                 />
               </div>
             </div>
@@ -93,7 +102,7 @@ const FindAccounts = (props) => {
               <div
                 className={Style.accounts_list_box}
                 key={i}
-                onClick={() => navigate("/send-token")}
+                onClick={() => handleSelectedItem(element.address)}
               >
                 <div className={Style.token_icon_box}>
                   <div className={Style.token_icon_mini_box}>

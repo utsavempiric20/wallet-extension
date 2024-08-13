@@ -135,7 +135,6 @@ const HomeComponent = (props) => {
       setSelectedAccount(accountData);
       fetchBalance();
     }
-    setManageuser(true);
     handleClose();
   };
 
@@ -171,15 +170,14 @@ const HomeComponent = (props) => {
           "userAccount",
           JSON.stringify({ ...selectedAccount, balance: res.data.data })
         );
+        setManageuser(true);
       })
       .catch((err) => {
         console.log(err);
       });
-    setManageuser(true);
   };
 
   const handleImportAccount = () => {
-    // navigate("/recover-account");
     navigate("/recover-seed-phrase");
     handleClose();
   };
@@ -238,6 +236,7 @@ const HomeComponent = (props) => {
 
   useEffect(() => {
     getAllAccounts();
+    selectedAccount && fetchBalance();
   }, []);
 
   return (
@@ -270,7 +269,7 @@ const HomeComponent = (props) => {
                 <div className={Style.address_AccountBox_Txt}>
                   {truncateAddress(selectedAccount.address)}
                 </div>
-                <IoCopy
+                <FiCopy
                   className={Style.address_AccountBox_copyIcon}
                   onClick={() => {
                     navigator.clipboard.writeText(selectedAccount.address);

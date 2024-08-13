@@ -9,6 +9,7 @@
   width: 365px;
   border-radius: 5px;
   overflow-y: auto;
+  border: 1px solid black;
 }
 
 .findAccounts_box h3 {

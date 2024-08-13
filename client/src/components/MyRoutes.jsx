@@ -120,7 +120,10 @@ const MyRoutes = (props) => {
           path="/find-accounts"
           element={<FindAccounts userDetails={userDetails} />}
         />
-        <Route path="/send-token" element={<SendToken />} />
+        <Route
+          path="/send-token/:address"
+          element={<SendToken selectedAccount={selectedAccount} />}
+        />
         <Route
           path="/receive-token"
           element={

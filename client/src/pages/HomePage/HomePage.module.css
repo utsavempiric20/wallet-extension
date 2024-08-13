@@ -25,6 +25,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .home_box {
@@ -258,7 +259,7 @@
 }
 
 .secure_box .secure_box_copy_icon {
-  font-size: 25px;
+  font-size: 19px;
   cursor: pointer;
   color: var(--button-color);
 }

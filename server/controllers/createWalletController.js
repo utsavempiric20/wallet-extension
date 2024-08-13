@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import userModel from "../models/userModel.js";
 
 const provider = new ethers.JsonRpcProvider("http://127.0.0.1:8545/");
+const provider2 = new ethers.EtherscanProvider();
 
 const createPasswordForWallet = async (req, res) => {
   let { password, confirm_password } = req.body;
@@ -458,21 +459,23 @@ const fetchUserBalance = async (req, res) => {
       _id: userAccount._id,
       "accounts.address": user.address,
     },
-    { $set: { "accounts.$.balance": balanceInEth } }
+    { $set: { "accounts.$.balance": parseFloat(balanceInEth).toFixed(2) } }
   );
   return res.status(200).json({
     success: 1,
-    data: balanceInEth,
+    data: parseFloat(balanceInEth).toFixed(2),
   });
 };
 
 const sendTransaction = async (req, res) => {
   const { fromAddress, toAddress, amount } = req.body;
 
+  console.log(req.body);
+
   const userAccounts = await userModel.findOne({
     accounts: { $elemMatch: { address: fromAddress } },
   });
-  const user = userAccounts.accounts.find(
+  const user = userAccounts?.accounts.find(
     (element) => element.address === fromAddress
   );
 
@@ -482,6 +485,14 @@ const sendTransaction = async (req, res) => {
       data: "Invalid Address",
     });
   }
+
+  if (fromAddress == toAddress) {
+    return res.status(401).json({
+      success: 0,
+      data: "Can't Send to Same Address",
+    });
+  }
+
   if (!userAccounts || !user) {
     return res.status(401).json({
       success: 0,
@@ -489,20 +500,26 @@ const sendTransaction = async (req, res) => {
     });
   }
 
-  let fromBalance = await provider.getBalance(fromAddress);
-  let formBalanceEther = ethers.formatEther(fromBalance);
-  let toBalance = await provider.getBalance(toAddress);
-  let toBalanceEther = ethers.formatEther(toBalance);
+  let userBalance = ethers.parseEther(user.balance);
+  let transactionAmount = ethers.parseEther(amount);
 
-  console.log(`Before From ${fromAddress} balance : ${formBalanceEther}`);
-  console.log(`Before To ${toAddress} balance : ${toBalanceEther}`);
+  console.log("userBalance : ", userBalance);
+  console.log("transactionAmount : ", transactionAmount);
 
-  console.log(user.balance, amount);
-  console.log(user.balance >= amount);
-  if (!(user.balance >= amount)) {
+  if (userBalance < transactionAmount) {
     return res.status(400).json({
       success: 0,
-      data: "Insufficiant Balance",
+      data: "Insufficiant balance.",
+    });
+  }
+
+  let fromBalance = await provider.getBalance(fromAddress);
+  let formBalanceEther = ethers.formatEther(fromBalance);
+
+  if (formBalanceEther < transactionAmount) {
+    return res.status(400).json({
+      success: 0,
+      data: "Insufficiant balance.",
     });
   }
 
@@ -510,19 +527,55 @@ const sendTransaction = async (req, res) => {
   console.log(signer);
   const tx = await signer.sendTransaction({
     to: toAddress,
-    value: ethers.parseEther(amount),
+    value: transactionAmount,
   });
+
+  await tx.wait();
 
   fromBalance = await provider.getBalance(fromAddress);
   formBalanceEther = ethers.formatEther(fromBalance);
-  toBalance = await provider.getBalance(toAddress);
-  toBalanceEther = ethers.formatEther(toBalance);
-  console.log(`After From ${fromAddress} balance : ${formBalanceEther}`);
-  console.log(`After To ${toAddress} balance : ${toBalanceEther}`);
+  const toBalance = await provider.getBalance(toAddress);
+  const toBalanceEther = ethers.formatEther(toBalance);
+
+  await userModel.updateOne(
+    { _id: userAccounts._id, "accounts.address": fromAddress },
+    { $set: { "accounts.$.balance": parseFloat(formBalanceEther).toFixed(2) } }
+  );
+
+  await userModel.updateOne(
+    { "accounts.address": toAddress },
+    { $set: { "accounts.$.balance": parseFloat(toBalanceEther).toFixed(2) } }
+  );
 
   return res.status(200).json({
     success: 1,
-    data: tx,
+    data: "SuccessFully Send",
+  });
+};
+
+const fetchTransactionHistory = async (req, res) => {
+  const { accountAddress } = req.body;
+
+  if (!ethers.isAddress(accountAddress)) {
+    return res.status(401).json({
+      success: 0,
+      data: "Invalid Address",
+    });
+  }
+
+  const latestBlockNumber = await provider.getBlockNumber();
+  const getblock = await provider.getBlock(latestBlockNumber);
+  const transaction = await provider.getTransaction(getblock.transactions[0]);
+  console.log("latestBlockNumber : ", latestBlockNumber);
+  console.log("getblock : ", getblock.transactions);
+  console.log("transaction : ", transaction);
+  console.log("from : ", transaction.from);
+  console.log("to : ", transaction.to);
+  console.log("value :", ethers.formatEther(transaction.value));
+
+  return res.json({
+    success: 1,
+    data: "Success",
   });
 };
 
@@ -539,4 +592,5 @@ export default {
   lockAndUnlockWallet,
   fetchUserBalance,
   sendTransaction,
+  fetchTransactionHistory,
 };

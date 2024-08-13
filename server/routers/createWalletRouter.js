@@ -56,4 +56,9 @@ createWalletRouter.post(
   createWalletController.sendTransaction
 );
 
+createWalletRouter.get(
+  "/getTransactionHistory",
+  createWalletController.fetchTransactionHistory
+);
+
 export default createWalletRouter;
