@@ -24,7 +24,7 @@ import { FaPlus } from "react-icons/fa6";
 import { TfiImport } from "react-icons/tfi";
 import { FiCopy } from "react-icons/fi";
 import { IoIosLock } from "react-icons/io";
-import { IoCopy } from "react-icons/io5";
+import AlertComponent from "../../components/AlertComponent/AlertComponent";
 
 const HomeComponent = (props) => {
   const { userDetails, selectedAccount, setSelectedAccount, setManageuser } =
@@ -267,7 +267,7 @@ const HomeComponent = (props) => {
               </div>
               <div className={Style.address_AccountBox}>
                 <div className={Style.address_AccountBox_Txt}>
-                  {truncateAddress(selectedAccount.address)}
+                  {selectedAccount && truncateAddress(selectedAccount.address)}
                 </div>
                 <FiCopy
                   className={Style.address_AccountBox_copyIcon}
@@ -471,6 +471,9 @@ const HomeComponent = (props) => {
               </DialogContent>
             </Dialog>
           </div>
+          {showAlert.isDisplay && (
+            <AlertComponent type={showAlert.type} message={showAlert.message} />
+          )}
         </div>
       )}
     </>
