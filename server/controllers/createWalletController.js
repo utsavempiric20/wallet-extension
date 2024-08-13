@@ -470,8 +470,6 @@ const fetchUserBalance = async (req, res) => {
 const sendTransaction = async (req, res) => {
   const { fromAddress, toAddress, amount } = req.body;
 
-  console.log(req.body);
-
   const userAccounts = await userModel.findOne({
     accounts: { $elemMatch: { address: fromAddress } },
   });
@@ -503,9 +501,6 @@ const sendTransaction = async (req, res) => {
   let userBalance = ethers.parseEther(user.balance);
   let transactionAmount = ethers.parseEther(amount);
 
-  console.log("userBalance : ", userBalance);
-  console.log("transactionAmount : ", transactionAmount);
-
   if (userBalance < transactionAmount) {
     return res.status(400).json({
       success: 0,
@@ -524,7 +519,6 @@ const sendTransaction = async (req, res) => {
   }
 
   const signer = new ethers.Wallet(user.privateKey, provider);
-  console.log(signer);
   const tx = await signer.sendTransaction({
     to: toAddress,
     value: transactionAmount,
@@ -566,12 +560,6 @@ const fetchTransactionHistory = async (req, res) => {
   const latestBlockNumber = await provider.getBlockNumber();
   const getblock = await provider.getBlock(latestBlockNumber);
   const transaction = await provider.getTransaction(getblock.transactions[0]);
-  console.log("latestBlockNumber : ", latestBlockNumber);
-  console.log("getblock : ", getblock.transactions);
-  console.log("transaction : ", transaction);
-  console.log("from : ", transaction.from);
-  console.log("to : ", transaction.to);
-  console.log("value :", ethers.formatEther(transaction.value));
 
   return res.json({
     success: 1,
